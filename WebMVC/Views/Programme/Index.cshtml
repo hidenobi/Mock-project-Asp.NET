@@ -1,0 +1,28 @@
+@model IEnumerable<WebMVC.Models.Programme>
+
+<h1>Programmes</h1>
+
+<table class="table">
+<thead>
+<tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Contact</th>
+    <th>Is Active</th>
+    <th></th>
+</tr>
+</thead>
+<tbody>
+@foreach (var programme in Model)
+{
+    <td>@programme.Name</td>
+    <td>@programme.Description</td>
+    <td>@programme.Contact.Name</td>
+    <td>@programme.IsActive</td>
+    <td>
+        <a href="@Url.Action("Details", new { id = programme.Id })">Details</a>
+    </td>
+    }
+    }
+    </tbody>
+</table>

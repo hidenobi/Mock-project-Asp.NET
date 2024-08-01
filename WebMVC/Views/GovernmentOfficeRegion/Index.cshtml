@@ -1,0 +1,33 @@
+@model IEnumerable<GovernmentOfficeRegion>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Government Office Regions</title>
+</head>
+<body>
+<h1>Government Office Regions</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Government Office Region Name</th>
+        <th>Description</th>
+        <th>County</th>
+        <th>IsActive</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var gov in Model)
+    {
+        <tr>
+            <td>@Html.ActionLink(gov.GovernmentOfficeRegionName, "Details", new {id = gov.GovernmentOfficeRegionId})</td>
+            <td>@gov.Description</td>
+            <td>@gov.County?.CountyName</td>
+            <td>@gov.IsActive</td>
+        </tr>
+    }
+    </tbody>
+</table>
+</body>
+</html>

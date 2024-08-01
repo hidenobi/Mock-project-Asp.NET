@@ -1,0 +1,24 @@
+@model WebMVC.Models.Programme
+
+<h1>Programme Details</h1>
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>@Model.Description</td>
+    </tr>
+    <tr>
+        <th>Contact</th>
+        <td>@Model.Contact.Name</td>
+    </tr>
+    <tr>
+        <th>Is Active</th>
+        <td>@Model.IsActive</td>
+    </tr>
+</table>
+
+<a href="@Url.Action("Index")">Back to List</a>

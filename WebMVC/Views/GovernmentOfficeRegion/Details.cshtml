@@ -1,0 +1,27 @@
+@model GovernmentOfficeRegion
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Government Office Region Details</title>
+</head>
+<body>
+<h1>@Model.GovernmentOfficeRegionName</h1>
+<div>
+    <h1>Government Office Region Details</h1>
+    @if (Model != null)
+    {
+        <p>Name: @Model.GovernmentOfficeRegionName</p>
+        <p>Description: @Model.Description</p>
+        <p>County: @Model.County?.CountyName</p>
+    }
+    else
+    {
+        <p>Details not found.</p>
+    }
+
+    <a href="/GovernmentOfficeRegion">Back</a>
+</div>
+</body>
+</html>

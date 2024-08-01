@@ -1,0 +1,42 @@
+@{
+    ViewData["Title"] = "Search Businesses";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/BusinessSite.css"> 
+</head>
+<body>
+    <header>
+        <h1>@ViewData["Title"]</h1>
+    </header>
+    <main>
+        <div>
+            <form id="searchForm" class="search-form">
+                <div>
+                    <label for="businessName">Business Name:</label>
+                    <input type="text" id="businessName" name="businessName">
+                </div>
+                <div>
+                    <label for="sicCode">SIC Code:</label>
+                    <input type="text" id="sicCode" name="sicCode">
+                </div>
+                <button type="submit">Search</button>
+                <button type="button" id="clearButton">Clear</button>
+                <button type="button" id="noneButton">None</button>
+            </form>
+        </div>
+        <div id="results"></div>
+        <div id="pagination" class="pagination"></div>
+        <div class="select-button-container">
+            <button class="select-button" id="selectButton">Select</button>
+            <button class="select-button" id="closeButton">Close</button>
+        </div>
+    </main>
+    <script src="~/js/BusinessSite.js" defer></script> 
+</body>
+</html>
