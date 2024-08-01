@@ -18,6 +18,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IGovernmentOfficeRegionRepository, GovernmentOfficeRegionRepository>();
 builder.Services.AddScoped<IGovernmentOfficeRegionService, GovernmentOfficeRegionService>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();

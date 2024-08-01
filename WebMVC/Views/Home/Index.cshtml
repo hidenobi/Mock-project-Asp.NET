@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    var isLoggedIn = (bool)ViewData["IsLoggedIn"];
 }
 
 <!DOCTYPE html>
@@ -8,6 +9,21 @@
     <title>Home</title>
 </head>
 <body>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    @if (isLoggedIn)
+    {
+    <p>Welcome, @ViewData["Username"]!</p>
+    <form method="post" asp-action="Logout">
+        <button type="submit" class="btn btn-primary">Logout</button>
+    </form>
+    }
+    else
+    {
+    <p>Click the button below to log in.</p>
+    <a class="btn btn-primary" href="@Url.Action("Login")">Login</a>
+    }
+</div>
 <h1>Menu</h1>
 <ul>
     <li><a href="#">Organization</a></li>

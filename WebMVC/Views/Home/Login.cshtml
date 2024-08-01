@@ -1,0 +1,26 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+<form asp-controller="Home" asp-action="Login" method="post">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="Username" required />
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="Password" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+<a href="@Url.Action("ForgotPassword", "Home")">Forgot Password?</a> <!-- Nút quên mật khẩu -->
+
+@if (ViewData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @ViewData["ErrorMessage"]
+    </div>
+}

@@ -14,6 +14,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<County> Counties { get; set; }
     public DbSet<TypeOfBusiness> Businesses { get; set; }
     public DbSet<ManagerName> ManagerNames { get; set; }
+    
+    public DbSet<User> Users { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<County>().HasData(
