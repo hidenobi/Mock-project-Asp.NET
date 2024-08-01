@@ -21,8 +21,17 @@ public class ProgrammeRepository : IProgrammeRepository
 
     public async Task<Programme> GetProgrammeByIdAsync(int id)
     {
-        return await _context.Programmes.FindAsync(id);
+        var programme = await _context.Programmes.FindAsync(id);
+        
+        if (programme == null)
+        {
+          
+            throw new KeyNotFoundException($"Programme with ID {id} not found.");
+        }
+        
+        return programme;
     }
+
 
     public async Task AddProgrammeAsync(Programme programme)
     {
