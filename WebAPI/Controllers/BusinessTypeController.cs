@@ -17,7 +17,7 @@ public class BusinessTypeController : ControllerBase
     }
 
     [HttpGet("search")]
-    public ActionResult<IEnumerable<BusinessType>> Search([FromQuery] string businessName, [FromQuery] string sicCode = "")
+    public ActionResult<IEnumerable<BusinessType>> Search([FromQuery] string businessName = "", [FromQuery] string sicCode = "")
     {
         var results = _businessTypeService.SearchBusinessTypes(businessName, sicCode);
         return Ok(results);

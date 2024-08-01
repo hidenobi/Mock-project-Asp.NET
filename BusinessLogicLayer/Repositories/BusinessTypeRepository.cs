@@ -14,9 +14,9 @@ public class BusinessTypeRepository : IBusinessTypeRepository
         _context = context;
     }
 
-    public IEnumerable<BusinessType> Search(string businessName, string sicCode)
+    public IEnumerable<BusinessType> Search(string? businessName, string? sicCode)
     {
-        var query = _context.BusinessTypes.AsQueryable();
+        var query = _context.BusinessTypes.AsQueryable().OrderBy(b => b.BusinessName);
         if (!string.IsNullOrWhiteSpace(businessName))
             {
                 query = query.Where(b => b.BusinessName != null && b.BusinessName.Contains(businessName)).OrderBy(b => b.BusinessName);

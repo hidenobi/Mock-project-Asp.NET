@@ -7,12 +7,10 @@ namespace WebMVC.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
     private readonly ApiService _apiService;
 
-    public HomeController(ILogger<HomeController> logger, ApiService apiService)
+    public HomeController( ApiService apiService)
     {
-        _logger = logger;
         _apiService = apiService;
     }
 
