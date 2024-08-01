@@ -9,17 +9,17 @@ public class User
 
     [Required]
     [StringLength(50)]
-    public string Username { get; set; }
+    public string? Username { get; set; }
 
     [Required]
     [StringLength(100)]
-    public string Password { get; set; }
+    public string? Password { get; set; }
 
     [Required]
     [StringLength(50)]
-    public string Role { get; set; }  // "customer" or "admin"
+    public string? Role { get; set; }  // "customer" or "admin"
  
     [Required]
     [StringLength(50)]
-    public string Email { get; set; }
+    public string? Email { get; set; }
 }

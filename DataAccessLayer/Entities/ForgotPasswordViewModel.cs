@@ -6,10 +6,10 @@ public class ForgotPasswordViewModel
 {
     [Required]
     [StringLength(50)]
-    public string Username { get; set; }
+    public string? Username { get; set; }
 
     [Required]
     [EmailAddress]
     [StringLength(50)]
-    public string Email { get; set; }
+    public string? Email { get; set; }
 }

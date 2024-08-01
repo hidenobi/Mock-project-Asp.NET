@@ -21,8 +21,9 @@ namespace BusinessLogicLayer.Services;
      public AuthService(ApplicationDbContext context, IConfiguration configuration)
      {
          _context = context;
-         _secretKey = configuration["Jwt:SecretKey"];
-         _configuration = configuration;
+        var jwtSecretKey = configuration["Jwt:SecretKey"];
+        _secretKey = jwtSecretKey ?? throw new ArgumentNullException(nameof(jwtSecretKey), "Jwt:SecretKey configuration value is null");
+        _configuration = configuration;
      }
 
      public AuthService(string httpsLocalhost)
@@ -35,7 +36,7 @@ namespace BusinessLogicLayer.Services;
          var user = await _context.Users.SingleOrDefaultAsync(u => u.Username == model.Username && u.Password == model.Password);
          if (user == null)
          {
-             return null;
+            throw new InvalidOperationException("User not found.");
          }
 
          var tokenHandler = new JwtSecurityTokenHandler();

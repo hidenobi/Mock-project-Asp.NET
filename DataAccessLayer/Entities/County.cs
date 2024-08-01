@@ -7,5 +7,5 @@ public class County
     public int CountyId { get; set; }
     
     [StringLength(50)] 
-    public required string CountyName { get; set; }
+    public required string? CountyName { get; set; }
 }
