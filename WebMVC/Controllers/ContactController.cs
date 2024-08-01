@@ -25,7 +25,6 @@ public class ContactController : Controller
         var contact = await _contactService.GetContactByIdAsync(id);
         return View(contact);
     }
-    //
     [HttpGet]
     public async Task<IActionResult> Create()
     {
@@ -33,7 +32,6 @@ public class ContactController : Controller
         ViewBag.ManagerNames = new SelectList(managerNames);
         return View();
     }
-    //
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateContactDto contact)

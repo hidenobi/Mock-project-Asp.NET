@@ -12,20 +12,18 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<GovernmentOfficeRegion> GovernmentOfficeRegions { get; set; }
     public DbSet<County> Counties { get; set; }
-    public DbSet<TypeOfBusiness> Businesses { get; set; }
     public DbSet<ManagerName> ManagerNames { get; set; }
-    
+    public DbSet<Address> Addresses { get; set; }
+    public DbSet<Town> Towns { get; set; }
+    public DbSet<Country> Countries { get; set; }
+    public DbSet<BusinessType> BusinessTypes { get; set; }  
+
     public DbSet<User> Users { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<County>().HasData(
-            new County { CountyId = 1, CountyName = "Vietnam" },
-            new County { CountyId = 2, CountyName = "USA" }
-        );
-    
-        modelBuilder.Entity<GovernmentOfficeRegion>().HasData(
-            new GovernmentOfficeRegion { GovernmentOfficeRegionId = 1, GovernmentOfficeRegionName = "GOV1", Description = "Des1", CountyId = 1, IsActive = true },
-            new GovernmentOfficeRegion { GovernmentOfficeRegionId = 2, GovernmentOfficeRegionName = "GOV2", Description = "Des2", CountyId = 2, IsActive = true }
-        );
+       base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<BusinessType>()
+            .HasIndex(b => b.BusinessName);
     }
 }

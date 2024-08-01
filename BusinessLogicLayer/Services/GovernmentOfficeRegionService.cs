@@ -14,30 +14,11 @@ public class GovernmentOfficeRegionService : IGovernmentOfficeRegionService
     
     public async Task<IEnumerable<GovernmentOfficeRegion>> GetAllGovernmentOfficeRegionsAsync()
     {
-        // IEnumerable<GovernmentOfficeRegion> govs = await _repository.GetAllGovernmentOfficeRegionsAsync();
-        // return govs.Select(g => new GovernmentOfficeRegion
-        // {
-        //     GovernmentOfficeRegionName = g.GovernmentOfficeRegionName,
-        //     Description = g.Description,
-        //     County = g.County,
-        //     IsActive = g.IsActive
-        // });
-        
         return await _repository.GetAllGovernmentOfficeRegionsAsync();
     }
 
     public async Task<GovernmentOfficeRegion> GetGovernmentOfficeRegionByIdAsync(int id)
     {
-        // var gov = await _repository.GetGovernmentOfficeRegionByIdAsync(id);
-        //
-        // return new GovernmentOfficeRegion
-        // {
-        //     GovernmentOfficeRegionName = gov.GovernmentOfficeRegionName,
-        //     Description = gov.Description,
-        //     County = gov.County,
-        //     IsActive = gov.IsActive
-        // };
-        
         return await _repository.GetGovernmentOfficeRegionByIdAsync(id);
     }
 }
