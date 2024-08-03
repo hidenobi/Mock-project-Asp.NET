@@ -25,24 +25,21 @@ public class ContactController : Controller
         var contact = await _contactService.GetContactByIdAsync(id);
         return View(contact);
     }
+
     [HttpGet]
     public async Task<IActionResult> Create()
     {
+        Console.WriteLine($"TAG-PT: for view create");
         var managerNames = await _contactService.GetAllManagerNamesAsync();
-        ViewBag.ManagerNames = new SelectList(managerNames);
+        ViewBag.ManagerNames = new SelectList(managerNames.ToList(),"Name");
         return View();
     }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateContactDto contact)
     {
-       
-            await _contactService.CreateContactAsync(contact);
-       
-        var managerNames = await _contactService.GetAllManagerNamesAsync();
-        ViewBag.ManagerNames = new SelectList(managerNames);
+        await _contactService.CreateContactAsync(contact);
         return View(contact);
     }
-
-    
 }

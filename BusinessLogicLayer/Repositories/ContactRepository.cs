@@ -30,7 +30,7 @@ public class ContactRepository : IContactRepository
                 StHomePhone = c.StHomePhone,
                 EmailAddress = c.EmailAddress,
                 ManagerNameId = c.ManagerNameId,
-                ManagerName = c.ManagerName.Name,  // Lấy tên của ManagerName
+                ManagerName = c.ManagerName.Name, // Lấy tên của ManagerName
                 ContactType = c.ContactType,
                 BestContactMethod = c.BestContactMethod,
                 JobRole = c.JobRole,
@@ -45,8 +45,29 @@ public class ContactRepository : IContactRepository
 
     public async Task<Contact?> GetContactById(int id)
     {
-        return  await _context.Contacts.FindAsync(id);
-        
+        var contact = _context.Contacts
+            .Include(c => c.ManagerName)
+            .Select(c => new ContactDto
+            {
+                Id = c.Id,
+                Firstname = c.Firstname,
+                Surname = c.Surname,
+                KnownAs = c.KnownAs,
+                OfficePhone = c.OfficePhone,
+                MobilePhone = c.MobilePhone,
+                StHomePhone = c.StHomePhone,
+                EmailAddress = c.EmailAddress,
+                ManagerNameId = c.ManagerNameId,
+                ManagerName = c.ManagerName.Name, // Lấy tên của ManagerName
+                ContactType = c.ContactType,
+                BestContactMethod = c.BestContactMethod,
+                JobRole = c.JobRole,
+                Workbase = c.Workbase,
+                JobTitle = c.JobTitle,
+                IsActive = c.IsActive,
+            }).FirstOrDefault();
+
+        return contact;
     }
 
     public async Task AddContact(Contact contact)
