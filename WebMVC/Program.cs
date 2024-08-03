@@ -1,9 +1,14 @@
+using WebMVC.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 
+// Add services to the container.
+builder.Services.AddHttpClient<IContactService, ContactService>();
+builder.Services.AddHttpClient<ApiService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -16,6 +21,17 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+//TODO: Auto navigate to "/contact" to demo page contact
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/")
+    {
+        context.Response.Redirect("/contact");
+        return;
+    }
+    await next();
+});
 
 app.UseRouting();
 

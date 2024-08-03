@@ -1,5 +1,5 @@
-using DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
+using WebMVC.Models;
 
 namespace WebMVC.Controllers;
 
@@ -14,7 +14,8 @@ public class ProgrammeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var programmes = await _httpClient.GetFromJsonAsync<IEnumerable<Programme>>("https://localhost:5168/api/programme");
+        var programmes =
+            await _httpClient.GetFromJsonAsync<IEnumerable<Programme>>("https://localhost:5168/api/programme");
         return View(programmes);
     }
 
@@ -25,6 +26,7 @@ public class ProgrammeController : Controller
         {
             return NotFound();
         }
+
         return View(programme);
     }
 }

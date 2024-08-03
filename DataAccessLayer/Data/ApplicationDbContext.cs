@@ -25,5 +25,10 @@ public class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<BusinessType>()
             .HasIndex(b => b.BusinessName);
+        
+        modelBuilder.Entity<Contact>()
+            .HasOne(p => p.ManagerName)
+            .WithMany(a => a.Contacts)
+            .HasForeignKey(b => b.ManagerNameId);
     }
 }

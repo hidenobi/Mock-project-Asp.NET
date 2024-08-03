@@ -1,18 +1,63 @@
 @model System.Collections.Generic.IEnumerable<WebMVC.Models.ContactDto?>
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Contact List";
 }
 
-<!DOCTYPE html>
+<h2>@ViewData["Title"]</h2>
 
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-      
-</div>
-</body>
-</html>
+<form id="contactForm">
+    <div class="mb-3">
+        <a href="@Url.Action("Add", "Contact")" class="btn btn-success">Add New Contact</a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>Contact Name</th>
+                <th>Mobile Phone</th>
+                <th>Email Address</th>
+                <th>Contact Type</th>
+                <th>Is Active</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var contact in Model)
+            {
+                <tr>
+                    <td><input type="radio" name="selectedContact" value="@contact.Id" /></td>
+                    <td>@($"{contact.Firstname} {contact.Surname}")</td>
+                    <td>@contact.MobilePhone</td>
+                    <td>@contact.EmailAddress</td>
+                    <td>@contact.ContactType</td>
+                    <td>@(contact.IsActive ? "Yes" : "No")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="form-group">
+        <button type="button" class="btn btn-primary action-btn" data-action="edit">Edit</button>
+        <button type="button" class="btn btn-info action-btn" data-action="details">Details</button>
+        <button type="button" class="btn btn-danger action-btn" data-action="delete">Delete</button>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $(".action-btn").click(function() {
+                var selectedContact = $("input[name='selectedContact']:checked").val();
+                var action = $(this).data('action');
+
+                if (selectedContact) {
+                    var url = '@Url.Action("Index", "Contact")/' + action + '/' + selectedContact;
+                    window.location.href = url;
+                } else {
+                    alert("Please select a contact.");
+                }
+            });
+        });
+    </script>
+}
