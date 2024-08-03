@@ -5,39 +5,44 @@
 }
 
 <h2>@ViewData["Title"]</h2>
-
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
 <form asp-action="Create" method="post">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="Firstname" class="control-label"></label>
-                <input asp-for="Firstname" class="form-control" />
+                <input asp-for="Firstname" class="form-control"/>
                 <span asp-validation-for="Firstname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Surname" class="control-label"></label>
-                <input asp-for="Surname" class="form-control" />
+                <input asp-for="Surname" class="form-control"/>
                 <span asp-validation-for="Surname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="KnownAs" class="control-label"></label>
-                <input asp-for="KnownAs" class="form-control" />
+                <input asp-for="KnownAs" class="form-control"/>
             </div>
             <div class="form-group">
                 <label asp-for="OfficePhone" class="control-label"></label>
-                <input asp-for="OfficePhone" class="form-control" />
+                <input asp-for="OfficePhone" class="form-control"/>
             </div>
             <div class="form-group">
                 <label asp-for="MobilePhone" class="control-label"></label>
-                <input asp-for="MobilePhone" class="form-control" />
+                <input asp-for="MobilePhone" class="form-control"/>
             </div>
             <div class="form-group">
                 <label asp-for="StHomePhone" class="control-label"></label>
-                <input asp-for="StHomePhone" class="form-control" />
+                <input asp-for="StHomePhone" class="form-control"/>
             </div>
             <div class="form-group">
                 <label asp-for="EmailAddress" class="control-label"></label>
-                <input asp-for="EmailAddress" class="form-control" />
+                <input asp-for="EmailAddress" class="form-control"/>
                 <span asp-validation-for="EmailAddress" class="text-danger"></span>
             </div>
         </div>
@@ -51,38 +56,38 @@
             </div>
             <div class="form-group">
                 <label asp-for="ContactType" class="control-label"></label>
-                <input asp-for="ContactType" class="form-control" />
+                <input asp-for="ContactType" class="form-control"/>
                 <span asp-validation-for="ContactType" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="BestContactMethod" class="control-label"></label>
-                <input asp-for="BestContactMethod" class="form-control" />
+                <input asp-for="BestContactMethod" class="form-control"/>
             </div>
             <div class="form-group">
                 <label asp-for="JobRole" class="control-label"></label>
-                <input asp-for="JobRole" class="form-control" />
+                <input asp-for="JobRole" class="form-control"/>
             </div>
             <div class="form-group">
                 <label asp-for="Workbase" class="control-label"></label>
-                <input asp-for="Workbase" class="form-control" />
+                <input asp-for="Workbase" class="form-control"/>
             </div>
             <div class="form-group">
                 <label asp-for="JobTitle" class="control-label"></label>
-                <input asp-for="JobTitle" class="form-control" />
+                <input asp-for="JobTitle" class="form-control"/>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                    <input class="form-check-input" asp-for="IsActive"/> @Html.DisplayNameFor(model => model.IsActive)
                 </label>
             </div>
         </div>
     </div>
     <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
+        <input type="submit" value="Create" class="btn btn-primary"/>
         <a asp-action="Index" class="btn btn-secondary">Back to List</a>
     </div>
 </form>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

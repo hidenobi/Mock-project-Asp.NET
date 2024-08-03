@@ -31,7 +31,7 @@ public class ContactController : Controller
     {
         Console.WriteLine($"TAG-PT: for view create");
         var managerNames = await _contactService.GetAllManagerNamesAsync();
-        ViewBag.ManagerNames = new SelectList(managerNames.ToList(),"Name");
+        ViewBag.ManagerNames = new SelectList(managerNames, "Id", "Name", "Name");
         return View();
     }
 
@@ -39,7 +39,13 @@ public class ContactController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateContactDto contact)
     {
-        await _contactService.CreateContactAsync(contact);
+        Console.WriteLine($"TAG-PT: for action create");
+        if (ModelState.IsValid)
+        {
+            await _contactService.CreateContactAsync(contact);
+            TempData["SuccessMessage"] = "Tạo contact thành công!";
+            return RedirectToAction(nameof(Index));
+        }
         return View(contact);
     }
 }

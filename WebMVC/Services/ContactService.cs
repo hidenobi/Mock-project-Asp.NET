@@ -43,7 +43,7 @@ public class ContactService : IContactService
 
     public async Task<IEnumerable<ManagerName>?> GetAllManagerNamesAsync()
     {
-        var response = await _httpClient.GetAsync($"{_baseUrl}contacts");
+        var response = await _httpClient.GetAsync($"{_baseUrl}contacts/manager_names");
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<IEnumerable<ManagerName>>();
     }

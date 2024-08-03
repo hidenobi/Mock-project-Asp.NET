@@ -24,6 +24,12 @@ public class ContactsController : ControllerBase
         return Ok(await _contactService.GetAllContacts());
     }
 
+    [HttpGet("manager_names")]
+    public async Task<ActionResult<IEnumerable<ManagerName>>> GetAllManagerNames()
+    {
+        return Ok(await _managerNameService.GetAllManagerName());
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<ContactDto>> GetContactById(int id)
     {
