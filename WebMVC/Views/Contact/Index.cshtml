@@ -10,7 +10,25 @@
     <div class="mb-3">
         <a href="@Url.Action("Create", "Contact")" class="btn btn-success">Add New Contact</a>
     </div>
-
+    <form id="contactSearchForm" method="post">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="firstNameSearch" class="form-label">First Name:</label>
+                <input type="text" class="form-control" id="firstNameSearch" name="firstNameSearch" placeholder="Search by First Name">
+            </div>
+            <div class="col-md-4">
+                <label for="surnameSearch" class="form-label">Surname:</label>
+                <input type="text" class="form-control" id="surnameSearch" name="surnameSearch" placeholder="Search by Surname">
+            </div>
+            <div class="col-md-4">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="isActiveFilter" name="isActiveFilter" value="true">
+                    <label class="form-check-label" for="isActiveFilter">Show Active Only</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
     <table class="table table-striped">
         <thead>
             <tr>

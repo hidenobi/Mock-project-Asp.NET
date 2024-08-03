@@ -20,6 +20,21 @@ public class ContactService : IContactService
         return await response.Content.ReadFromJsonAsync<IEnumerable<ContactDto>>();
     }
 
+    public async Task<IEnumerable<ContactDto?>> GetAllContactsByFirstNameAndSurnameAndIsActive
+    (
+        string? firstName,
+        string? surname,
+        bool? isActive
+    )
+    {
+        Console.WriteLine($"TAG-PT: {firstName} {surname} {isActive}");
+        var response =
+            await _httpClient.GetAsync(
+                $"{_baseUrl}contacts/search?firstName={firstName}&surname={surname}&isActive={isActive}");
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<IEnumerable<ContactDto>>();
+    }
+
     public async Task<ContactDto> GetContactByIdAsync(int id)
     {
         var response = await _httpClient.GetAsync($"{_baseUrl}contacts/{id}");
@@ -34,7 +49,7 @@ public class ContactService : IContactService
         return await response.Content.ReadFromJsonAsync<CreateContactDto>();
     }
 
-    public async Task<UpdateContactDto?> UpdateContactAsync(int id ,UpdateContactDto updateContactDto)
+    public async Task<UpdateContactDto?> UpdateContactAsync(int id, UpdateContactDto updateContactDto)
     {
         var response = await _httpClient.PutAsJsonAsync($"{_baseUrl}contacts/{id}", updateContactDto);
         response.EnsureSuccessStatusCode();
@@ -47,5 +62,4 @@ public class ContactService : IContactService
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<IEnumerable<ManagerName>>();
     }
-    
 }

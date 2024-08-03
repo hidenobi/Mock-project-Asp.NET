@@ -35,7 +35,7 @@ public class ContactsController : ControllerBase
     (
         string? firstName,
         string? surname,
-        bool? isActive
+        bool? isActive = true
     )
     {
         return Ok(await _contactService.GetAllContactsByFirstNameAndSurnameAndIsActive(firstName, surname, isActive));

@@ -14,9 +14,24 @@ public class ContactController : Controller
         _contactService = contactService;
     }
 
-    public async Task<IActionResult> Index()
+    // public async Task<IActionResult> Index()
+    // {
+    //     var contacts = await _contactService.GetAllContactsAsync();
+    //     return View(contacts);
+    // }
+
+    public async Task<IActionResult> Index(
+        string? firstNameSearch,
+        string? surnameSearch,
+        bool isActiveFilter=true)
     {
-        var contacts = await _contactService.GetAllContactsAsync();
+        var contacts =
+            await _contactService.GetAllContactsByFirstNameAndSurnameAndIsActive
+            (
+                firstNameSearch,
+                surnameSearch,
+                isActiveFilter
+            );
         return View(contacts);
     }
 
@@ -45,6 +60,7 @@ public class ContactController : Controller
             await _contactService.CreateContactAsync(contact);
             return RedirectToAction(nameof(Index));
         }
+
         return View(contact);
     }
 }
