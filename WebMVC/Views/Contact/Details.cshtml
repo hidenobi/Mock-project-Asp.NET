@@ -1,18 +1,54 @@
 @model ContactDto
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Detail";
 }
 
-<!DOCTYPE html>
+<h2>@ViewData["Title"] @Model.Firstname @Model.Surname</h2>
 
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
+<form id="contactForm">
+    <table class="table table-striped">
+       
 <div>
-      
+    
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Firstname</dt>
+        <dd class="col-sm-10">@Model.Firstname</dd>
+        <dt class="col-sm-2">Surname</dt>
+        <dd class="col-sm-10">@Model.Surname</dd>
+        <dt class="col-sm-2">KnownAs</dt>
+        <dd class="col-sm-10">@Model.KnownAs</dd>
+        <dt class="col-sm-2">OfficePhone</dt>
+        <dd class="col-sm-10">@Model.OfficePhone</dd>
+        <dt class="col-sm-2">MobilePhone</dt>
+        <dd class="col-sm-10">@Model.MobilePhone</dd>
+        <dt class="col-sm-2">StHomePhone</dt>
+        <dd class="col-sm-10">@Model.StHomePhone</dd>
+        <dt class="col-sm-2">EmailAddress</dt>
+        <dd class="col-sm-10">@Model.EmailAddress</dd>
+        <dt class="col-sm-2">ManagerName</dt>
+        <dd class="col-sm-10">@Model.ManagerName</dd>
+        <dt class="col-sm-2">ContactType</dt>
+        <dd class="col-sm-10">@Model.ContactType</dd>
+        <dt class="col-sm-2">BestContactMethod</dt>
+        <dd class="col-sm-10">@Model.BestContactMethod</dd>
+        <dt class="col-sm-2">JobRole</dt>
+        <dd class="col-sm-10">@Model.JobRole</dd>
+        <dt class="col-sm-2">Workbase</dt>
+        <dd class="col-sm-10">@Model.Workbase</dd>
+        <dt class="col-sm-2">JobTitle</dt>
+        <dd class="col-sm-10">@Model.JobTitle</dd>
+        <dt class="col-sm-2">IsActive</dt>
+        <dd class="col-sm-10">@Model.IsActive</dd>
+    </dl>
 </div>
-</body>
-</html>
+
+
+
+    </table>
+<div class="form-group">
+    <a asp-action="Index">Back to List</a>
+</div>
+</form>
+

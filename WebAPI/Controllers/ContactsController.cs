@@ -25,7 +25,7 @@ public class ContactsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Contact>> GetContactById(int id)
+    public async Task<ActionResult<ContactDto>> GetContactById(int id)
     {
         var contact = await _contactService.GetContactById(id);
         if (contact == null)
