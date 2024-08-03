@@ -7,7 +7,7 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ContactsController : ControllerBase 
+public class ContactsController : ControllerBase
 {
     private readonly ContactService _contactService;
     private readonly ManagerNameService _managerNameService;
