@@ -3,6 +3,7 @@ using DataAccessLayer.Data;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Entities.Dto;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BusinessLogicLayer.Repositories;
 
@@ -18,6 +19,51 @@ public class ContactRepository : IContactRepository
     public async Task<IEnumerable<Contact>> GetAllContacts()
     {
         var contacts = await _context.Contacts
+            .Include(c => c.ManagerName)
+            .Select(c => new ContactDto
+            {
+                Id = c.Id,
+                Firstname = c.Firstname,
+                Surname = c.Surname,
+                KnownAs = c.KnownAs,
+                OfficePhone = c.OfficePhone,
+                MobilePhone = c.MobilePhone,
+                StHomePhone = c.StHomePhone,
+                EmailAddress = c.EmailAddress,
+                ManagerNameId = c.ManagerNameId,
+                ManagerName = c.ManagerName.Name, // Lấy tên của ManagerName
+                ContactType = c.ContactType,
+                BestContactMethod = c.BestContactMethod,
+                JobRole = c.JobRole,
+                Workbase = c.Workbase,
+                JobTitle = c.JobTitle,
+                IsActive = c.IsActive,
+            })
+            .ToListAsync();
+
+        return contacts;
+    }
+
+    public async Task<IEnumerable<Contact>> GetAllContactsByFirstNameAndSurnameAndIsActive(string? firstName,
+        string? surname, bool? isActive)
+    {
+        var query = _context.Contacts.AsQueryable();
+        if (!firstName.IsNullOrEmpty())
+        {
+            query = query.Where(c => c.Firstname != null && c.Firstname.Equals(firstName));
+        }
+
+        if (!surname.IsNullOrEmpty())
+        {
+            query = query.Where(c => c.Surname != null && c.Surname.Equals(surname));
+        }
+
+        if (isActive.HasValue)
+        {
+            query = query.Where(c => c.IsActive == isActive);
+        }
+
+        var contacts = await query
             .Include(c => c.ManagerName)
             .Select(c => new ContactDto
             {

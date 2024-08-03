@@ -43,7 +43,6 @@ public class ContactController : Controller
         if (ModelState.IsValid)
         {
             await _contactService.CreateContactAsync(contact);
-            TempData["SuccessMessage"] = "Tạo contact thành công!";
             return RedirectToAction(nameof(Index));
         }
         return View(contact);

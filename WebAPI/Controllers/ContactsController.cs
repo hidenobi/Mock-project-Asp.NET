@@ -30,6 +30,17 @@ public class ContactsController : ControllerBase
         return Ok(await _managerNameService.GetAllManagerName());
     }
 
+    [HttpGet("search")]
+    public async Task<ActionResult<IEnumerable<Contact>>> GetAllContactsByFirstNameAndSurnameAndIsActive
+    (
+        string? firstName,
+        string? surname,
+        bool? isActive
+    )
+    {
+        return Ok(await _contactService.GetAllContactsByFirstNameAndSurnameAndIsActive(firstName, surname, isActive));
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<ContactDto>> GetContactById(int id)
     {

@@ -17,6 +17,16 @@ public class ContactService
         return await _contactRepository.GetAllContacts();
     }
 
+    public async Task<IEnumerable<Contact>> GetAllContactsByFirstNameAndSurnameAndIsActive
+    (
+        string? firstName,
+        string? surname,
+        bool? isActive
+    )
+    {
+        return await _contactRepository.GetAllContactsByFirstNameAndSurnameAndIsActive(firstName, surname, isActive);
+    }
+
     public async Task<Contact?> GetContactById(int id)
     {
         return await _contactRepository.GetContactById(id);
