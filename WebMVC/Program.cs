@@ -9,6 +9,11 @@ builder.Services.AddHttpClient();
 // Add services to the container.
 builder.Services.AddHttpClient<IContactService, ContactService>();
 builder.Services.AddHttpClient<ApiService>();
+builder.Services.AddScoped<ApiService>(); 
+builder.Services.AddHttpClient("BusinessTypeAPI", client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5103/"); 
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,6 +44,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
 
 app.Run();
