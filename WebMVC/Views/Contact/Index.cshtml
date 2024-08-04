@@ -6,52 +6,61 @@
 
 <h2>@ViewData["Title"]</h2>
 
+<form id="contactSearchForm" method="get" action="@Url.Action("Index", "Contact")">
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label for="firstNameSearch" class="form-label">First Name:</label>
+            <input type="text" class="form-control" id="firstNameSearch" name="firstNameSearch"
+                   placeholder="Search by First Name" value="@ViewBag.FirstNameSearch">
+        </div>
+        <div class="col-md-3">
+            <label for="surnameSearch" class="form-label">Surname:</label>
+            <input type="text" class="form-control" id="surnameSearch" name="surnameSearch"
+                   placeholder="Search by Surname" value="@ViewBag.SurnameSearch">
+        </div>
+        <div class="col-md-3">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="isActiveFilter" name="isActiveFilter" 
+                       value="true" @(ViewBag.IsActiveFilter == false ? "" : "checked")>
+                <input type="hidden" name="isActiveFilter" value="false">
+                <label class="form-check-label" for="isActiveFilter">Show Active Only</label>
+            </div>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</form>
 <form id="contactForm">
     <div class="mb-3">
         <a href="@Url.Action("Create", "Contact")" class="btn btn-success">Add New Contact</a>
     </div>
-    <form id="contactSearchForm" method="post">
-        <div class="row mb-3">
-            <div class="col-md-4">
-                <label for="firstNameSearch" class="form-label">First Name:</label>
-                <input type="text" class="form-control" id="firstNameSearch" name="firstNameSearch" placeholder="Search by First Name">
-            </div>
-            <div class="col-md-4">
-                <label for="surnameSearch" class="form-label">Surname:</label>
-                <input type="text" class="form-control" id="surnameSearch" name="surnameSearch" placeholder="Search by Surname">
-            </div>
-            <div class="col-md-4">
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="isActiveFilter" name="isActiveFilter" value="true">
-                    <label class="form-check-label" for="isActiveFilter">Show Active Only</label>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-    </form>
+
     <table class="table table-striped">
         <thead>
-            <tr>
-                <th>Select</th>
-                <th>Contact Name</th>
-                <th>Mobile Phone</th>
-                <th>Email Address</th>
-                <th>Contact Type</th>
-                <th>Is Active</th>
-            </tr>
+        <tr>
+            <th>Select</th>
+            <th>Contact Name</th>
+            <th>Mobile Phone</th>
+            <th>Email Address</th>
+            <th>Contact Type</th>
+            <th>Is Active</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var contact in Model)
-            {
-                <tr>
-                    <td><input type="radio" name="selectedContact" value="@contact.Id" /></td>
-                    <td>@($"{contact.Firstname} {contact.Surname}")</td>
-                    <td>@contact.MobilePhone</td>
-                    <td>@contact.EmailAddress</td>
-                    <td>@contact.ContactType</td>
-                    <td>@(contact.IsActive ? "Yes" : "No")</td>
-                </tr>
-            }
+        @foreach (var contact in Model)
+        {
+            <tr>
+                <td>
+                    <input type="radio" name="selectedContact" value="@contact.Id"/>
+                </td>
+                <td>@($"{contact.Firstname} {contact.Surname}")</td>
+                <td>@contact.MobilePhone</td>
+                <td>@contact.EmailAddress</td>
+                <td>@contact.ContactType</td>
+                <td>@(contact.IsActive ? "Yes" : "No")</td>
+            </tr>
+        }
         </tbody>
     </table>
 
@@ -77,5 +86,31 @@
                 }
             });
         });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+                var form = document.getElementById('contactSearchForm');
+                var checkbox = document.getElementById('isActiveFilter');
+                var hiddenInput = checkbox.nextElementSibling;
+        
+                function updateCheckboxState() {
+                    if (checkbox.checked) {
+                        checkbox.value = 'true';
+                        hiddenInput.disabled = true;
+                    } else {
+                        checkbox.value = 'false';
+                        hiddenInput.disabled = false;
+                    }
+                }
+        
+                // Set initial state
+                updateCheckboxState();
+        
+                checkbox.addEventListener('change', function() {
+                    updateCheckboxState();
+                    
+                    // Tự động submit form khi checkbox thay đổi
+                    form.submit();
+                });
+            });
     </script>
 }

@@ -229,3 +229,7 @@ j
 :DataAccessLayer/Migrations/20240803184206_InitialCreate.cs,0\5\0545c89fa19f7e04293f26114f0eaef98799adad
 j
 :DataAccessLayer/Migrations/20240803174533_InitialCreate.cs,a\9\a94bcd63171b140fa3923ba0ce792a5c016d0a6d
+R
+"WebMVC/Services/IContactService.cs,c\5\c506fe61bba9d96d5a0cee20c15f1fb01a774f67
+Q
+!WebMVC/Services/ContactService.cs,1\f\1fcf1a11536b0b7dda2e56db84cabd9044af9806

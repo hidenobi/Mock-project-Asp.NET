@@ -14,17 +14,19 @@ public class ContactController : Controller
         _contactService = contactService;
     }
 
-    // public async Task<IActionResult> Index()
-    // {
-    //     var contacts = await _contactService.GetAllContactsAsync();
-    //     return View(contacts);
-    // }
+    public async Task<IActionResult> Index()
+    {
+        var contacts = await _contactService.GetAllContactsAsync();
+        return View(contacts);
+    }
 
+    [HttpGet]
     public async Task<IActionResult> Index(
         string? firstNameSearch,
         string? surnameSearch,
-        bool isActiveFilter=true)
+        bool? isActiveFilter)
     {
+        Console.WriteLine($"ContactController: TAG-PT: {isActiveFilter}");
         var contacts =
             await _contactService.GetAllContactsByFirstNameAndSurnameAndIsActive
             (
@@ -32,6 +34,9 @@ public class ContactController : Controller
                 surnameSearch,
                 isActiveFilter
             );
+        ViewBag.FirstNameSearch = firstNameSearch;
+        ViewBag.SurnameSearch = surnameSearch;
+        ViewBag.IsActiveFilter = isActiveFilter ?? true;
         return View(contacts);
     }
 

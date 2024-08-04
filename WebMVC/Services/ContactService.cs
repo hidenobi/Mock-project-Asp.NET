@@ -27,7 +27,6 @@ public class ContactService : IContactService
         bool? isActive
     )
     {
-        Console.WriteLine($"TAG-PT: {firstName} {surname} {isActive}");
         var response =
             await _httpClient.GetAsync(
                 $"{_baseUrl}contacts/search?firstName={firstName}&surname={surname}&isActive={isActive}");
