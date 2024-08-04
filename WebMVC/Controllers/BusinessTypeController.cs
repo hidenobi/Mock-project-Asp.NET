@@ -31,9 +31,9 @@ namespace WebMVC.Controllers
             businessName = businessName ?? string.Empty;
             sicCode = sicCode ?? string.Empty;
 
-            var client = _clientFactory.CreateClient("BusinessTypeAPI");
+            var client = _clientFactory.CreateClient("DefaultAPI");
             
-            var response = await client.GetAsync($"api/businesstype/search?businessName={Uri.EscapeDataString(businessName)}&sicCode={Uri.EscapeDataString(sicCode)}");
+            var response = await client.GetAsync($"businesstype/search?businessName={Uri.EscapeDataString(businessName)}&sicCode={Uri.EscapeDataString(sicCode)}");
 
             if (response.IsSuccessStatusCode)
             {

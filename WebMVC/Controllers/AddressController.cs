@@ -29,8 +29,8 @@ namespace WebMVC.Controllers
         [HttpPost("search")]
         public async Task<IActionResult> Search(string postcode, string street, string town, int page = 1)
         {
-            var client = _clientFactory.CreateClient("AddressAPI");
-            var response = await client.GetAsync($"api/address/search?postcode={postcode}&street={street}&town={town}");
+            var client = _clientFactory.CreateClient("DefaultAPI");
+            var response = await client.GetAsync($"address/search?postcode={postcode}&street={street}&town={town}");
 
             if (response.IsSuccessStatusCode)
             {

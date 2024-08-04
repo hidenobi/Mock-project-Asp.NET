@@ -10,9 +10,11 @@ builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<IContactService, ContactService>();
 builder.Services.AddHttpClient<ApiService>();
 builder.Services.AddScoped<ApiService>(); 
-builder.Services.AddHttpClient("BusinessTypeAPI", client =>
+var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
+
+builder.Services.AddHttpClient("DefaultAPI", client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5103/"); 
+    client.BaseAddress = new Uri(apiSettings.BaseUrl);
 });
 var app = builder.Build();
 
@@ -48,3 +50,9 @@ app.MapControllerRoute(
     );
 
 app.Run();
+
+
+public class ApiSettings
+{
+    public string BaseUrl { get; set; }
+}
