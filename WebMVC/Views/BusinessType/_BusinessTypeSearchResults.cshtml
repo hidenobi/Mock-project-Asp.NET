@@ -30,21 +30,21 @@
     <ul class="pagination">
         @if (Model.PageNumber > 1)
         {
-        <li class="page-item">
-            <a class="page-link" href="javascript:void(0)" onclick="loadPage(@(Model.PageNumber - 1))">Previous</a>
-        </li>
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" onclick="loadPage(@(Model.PageNumber - 1))">Previous</a>
+            </li>
         }
         @for (var i = 1; i <= Model.TotalPages; i++)
         {
-        <li class="page-item @(i == Model.PageNumber ? "active" : "")">
-<a class="page-link" href="javascript:void(0)" onclick="loadPage(@i)" role="button">@i</a>
-        </li>
+            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                <a class="page-link" href="javascript:void(0)" onclick="loadPage(@i)" role="button">@i</a>
+            </li>
         }
         @if (Model.PageNumber < Model.TotalPages)
         {
-        <li class="page-item">
-            <a class="page-link" href="javascript:void(0)" onclick="loadPage(@(Model.PageNumber + 1))">Next</a>
-        </li>
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" onclick="loadPage(@(Model.PageNumber + 1))">Next</a>
+            </li>
         }
     </ul>
     }
