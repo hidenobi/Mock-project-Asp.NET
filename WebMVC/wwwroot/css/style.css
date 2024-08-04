@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: green;
+}
+
+.filters {
+    margin-bottom: 20px;
+}
+
+.filters a {
+    margin-left: 10px;
+    margin-right: 10px;
+    text-decoration: none;
+    color: blue;
+}
+
+.filters a:hover {
+    text-decoration: underline;
+}
+
+.filters input {
+    align-items: flex-end;
+    right: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f5f5f5;
+}
+
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.pagination a {
+    margin-right: 10px;
+    text-decoration: none;
+    color: blue;
+}
+
+.pagination a:hover {
+    text-decoration: underline;
+}
+
+.pagination span {
+    margin-right: 10px;
+}
+
+#includeInactive {
+    margin-left: 10px;
+}
+

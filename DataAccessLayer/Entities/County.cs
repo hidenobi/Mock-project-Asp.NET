@@ -12,6 +12,7 @@ public class County
     public int CountryID { get; set; }
 
     [Required]
+    [StringLength(50)]
     public string? CountyName { get; set; }
 
     public virtual Country? Country { get; set; }
