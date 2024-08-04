@@ -1,13 +1,32 @@
 @model IEnumerable<GovernmentOfficeRegion>
 
+@{
+ViewBag.Title = "Government Office Region List";
+<link rel="stylesheet" href="~/css/style.css" />
+}
+
 <!DOCTYPE html>
 
 <html lang="en">
 <head>
-    <title>Government Office Regions</title>
+    <title>@ViewBag.Title</title>
 </head>
+
 <body>
 <h1>Government Office Regions</h1>
+
+<div class="filters">
+    <a href="@Url.Action("Index", new {filter = "All", pageNumber = 1 })">All</a> |
+    <a href="@Url.Action("Index", new {filter = "0-9", pageNumber = 1 })">0-9</a> |
+    <a href="@Url.Action("Index", new {filter = "A-E", pageNumber = 1 })">A B C D E</a> |
+    <a href="@Url.Action("Index", new {filter = "F-J", pageNumber = 1 })">F G H I J</a> |
+    <a href="@Url.Action("Index", new {filter = "K-N", pageNumber = 1 })">K L M N</a> |
+    <a href="@Url.Action("Index", new {filter = "O-R", pageNumber = 1 })">O P Q R</a> |
+    <a href="@Url.Action("Index", new {filter = "S-V", pageNumber = 1 })">S T U V</a> |
+    <a href="@Url.Action("Index", new {filter = "W-Z", pageNumber = 1 })">W X Y Z</a>
+    <input type="checkbox" id="includeInactive" name="includeInactive" @(ViewBag.IncludeInactive ? "checked" : "") onchange="window.location.href='@Url.Action("Index", new { filter = ViewBag.Filter, includeInactive = !ViewBag.IncludeInactive, pageNumber = ViewBag.CurrentPage, pageRecord = ViewBag.PageRecords })'" /> Include In-active
+</div>
+
 <table>
     <thead>
     <tr>
@@ -20,14 +39,28 @@
     <tbody>
     @foreach (var gov in Model)
     {
-        <tr>
-            <td>@Html.ActionLink(gov.GovernmentOfficeRegionName, "Details", new {id = gov.GovernmentOfficeRegionId})</td>
-            <td>@gov.Description</td>
-            <td>@gov.County?.CountyName</td>
-            <td>@gov.IsActive</td>
-        </tr>
+    <tr>
+        <td>@Html.ActionLink(gov.GovernmentOfficeRegionName, "Details", new {id = gov.GovernmentOfficeRegionId})</td>
+        <td>@gov.Description</td>
+        <td>@gov.County?.CountyName</td>
+        <td>@gov.IsActive</td>
+    </tr>
     }
     </tbody>
 </table>
+
+<div class="pagination">
+    @if (ViewBag.CurrentPage > 1)
+    {
+    <a href="@Url.Action("Index", new {fiter = ViewBag.Filter, pageNumber = ViewBag.CurrentPage - 1})"> Previous </a>
+    }
+    <span>@ViewBag.CurrentPage of @ViewBag.TotalPages</span>
+    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+    {
+    <a href="@Url.Action("Index", new {fiter = ViewBag.Filter, pageNumber = ViewBag.CurrentPage + 1})"> Next </a>
+    }
+</div>
+
 </body>
+
 </html>

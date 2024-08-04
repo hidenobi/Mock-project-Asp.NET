@@ -6,28 +6,80 @@ namespace WebMVC.Controllers;
 public class GovernmentOfficeRegionController : Controller
 {
     private readonly HttpClient _httpClient;
+    private readonly IConfiguration _configuration;
 
-    public GovernmentOfficeRegionController(HttpClient httpClient)
+    public GovernmentOfficeRegionController(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
+        _configuration = configuration;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string filter = "All",bool includeInactive = false, int pageNumber = 1, int pageRecord = 15)
     {
-        var response = await _httpClient.GetAsync("https://localhost:5103/api/GovernmentOfficeRegion");
+        var baseUrl = _configuration["ApplicationUrls:https"]
+            ?.Split(";")
+            .FirstOrDefault(url => url.StartsWith("https"));
+        var apiUrl = $"{baseUrl}/api/GovernmentOfficeRegion";
+        var response = await _httpClient.GetAsync(apiUrl);
         if (response.IsSuccessStatusCode)
         {
-            var govs = await response.Content.ReadFromJsonAsync<IEnumerable<GovernmentOfficeRegion>>();
-            return View(govs);
-        }
+            IEnumerable<GovernmentOfficeRegion>? govs = await response.Content.ReadFromJsonAsync<IEnumerable<GovernmentOfficeRegion>>();
 
+            if (!includeInactive)
+            {
+                govs = govs.Where(g => g.IsActive);
+            }
+            
+            switch (filter)
+            {
+                case "0-9":
+                    govs = govs.Where(g => char.IsDigit(g.GovernmentOfficeRegionName[0]));
+                    break;
+                case "A-E":
+                    govs = govs.Where(g =>
+                            g.GovernmentOfficeRegionName[0] >= 'A' && g.GovernmentOfficeRegionName[0] <= 'E');
+                    break;
+                case "F-J":
+                    govs = govs.Where(g =>
+                            g.GovernmentOfficeRegionName[0] >= 'F' && g.GovernmentOfficeRegionName[0] <= 'J');
+                    break;
+                case "K-N":
+                    govs = govs.Where(g =>
+                            g.GovernmentOfficeRegionName[0] >= 'K' && g.GovernmentOfficeRegionName[0] <= 'N');
+                    break;
+                case "O-R":
+                    govs = govs.Where(g =>
+                            g.GovernmentOfficeRegionName[0] >= 'O' && g.GovernmentOfficeRegionName[0] <= 'R');
+                    break;
+                case "S-V":
+                    govs = govs.Where(g =>
+                            g.GovernmentOfficeRegionName[0] >= 'S' && g.GovernmentOfficeRegionName[0] <= 'V');
+                    break;
+                case "W-Z":
+                    govs = govs.Where(g =>
+                            g.GovernmentOfficeRegionName[0] >= 'W' && g.GovernmentOfficeRegionName[0] <= 'Z');
+                    break;
+            }
+            
+            var pageGovs = govs.Skip(((int)pageNumber - 1) * pageRecord).Take(pageRecord).ToList();
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.PageRecords = pageRecord;
+            ViewBag.TotalPages = (int)Math.Ceiling(govs.Count() / (double)pageRecord);
+            ViewBag.Filter = filter;
+            ViewBag.IncludeInactive = includeInactive;
+            return View(pageGovs);
+        }
         
         return NotFound();
     }
 
     public async Task<IActionResult> Details(int id)
     {
-        var response = await _httpClient.GetAsync($"https://localhost:5103/api/GovernmentOfficeRegion/{id}");
+        var baseUrl = _configuration["ApplicationUrls:https"]
+            ?.Split(";")
+            .FirstOrDefault(url => url.StartsWith("https"));
+        var apiUrl = $"{baseUrl}/api/GovernmentOfficeRegion/{id}";
+        var response = await _httpClient.GetAsync(apiUrl);
         if (response.IsSuccessStatusCode)
         {
             var gov = await response.Content.ReadFromJsonAsync<GovernmentOfficeRegion>();
