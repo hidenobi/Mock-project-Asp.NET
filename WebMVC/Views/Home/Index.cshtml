@@ -3,37 +3,49 @@
     var isLoggedIn = (bool)ViewData["IsLoggedIn"];
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Home</title>
-</head>
-<body>
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     @if (isLoggedIn)
     {
-    <p>Welcome, @ViewData["Username"]!</p>
-    <form method="post" asp-action="Logout">
-        <button type="submit" class="btn btn-primary">Logout</button>
-    </form>
+        <p>Welcome, @ViewData["Username"]!</p>
+        <form method="post" asp-controller="Home" asp-action="Logout">
+            <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
     }
     else
     {
-    <p>Click the button below to log in.</p>
-    <a class="btn btn-primary" href="@Url.Action("Login")">Login</a>
+        <p>Click the button below to log in.</p>
+        <a class="btn btn-primary" href="@Url.Action("Login", "Home")">Login</a>
     }
 </div>
-<h1>Menu</h1>
-<ul>
-    <li><a href="#">Organization</a></li>
-    <li><a href="#">Services</a></li>
-    <li>
-        <a href="#">Geography</a>
+
+<div class="container mt-4">
+    <h2>Organisation</h2>
+    <div class="module">
+        <h3>Services</h3>
         <ul>
-            <li><a href="/GovernmentOfficeRegion">List Government Office Region</a></li>
+            <li><a href="@Url.Action("ProgrammeMaintenance", "Services")">Programme Maintenance</a></li>
+            <li><a href="@Url.Action("ServiceMaintenance", "Services")">Service Maintenance</a></li>
         </ul>
-    </li>
-</ul>
-</body>
-</html>
+    </div>
+    <div class="module">
+        <h3>Geography</h3>
+        <ul>
+            <li><a href="@Url.Action("TrustRegions", "Geography")">Trust Regions</a></li>
+            <li><a href="@Url.Action("GovOfficeRegionList", "Geography")">Government Office Region</a></li>
+           
+        </ul>
+    </div>
+    <div class="module">
+        <h3>Premises </h3>
+    </div>
+</div>
+
+<style>
+    .module {
+        margin-bottom: 20px;
+    }
+    .module h3 {
+        margin-top: 20px;
+    }
+</style>
