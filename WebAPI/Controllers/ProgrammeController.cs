@@ -1,74 +1,139 @@
 using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Services;
 using DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using DataAccessLayer.Entities.Dto;
 
-namespace WebAPI.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class ProgrammeController : ControllerBase
+namespace WebAPI.Controllers
 {
-    private readonly IProgrammeService _programmeService;
-
-    public ProgrammeController(IProgrammeService programmeService)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ProgrammeController : ControllerBase
     {
-        _programmeService = programmeService;
-    }
+        private readonly IProgrammeService _programmeService;
+        private readonly ContactService _contactService;
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Programme>>> GetProgrammes()
-    {
-        var programmes = await _programmeService.GetAllProgrammesAsync();
-        return Ok(programmes);
-    }
-
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Programme>> GetProgramme(int id)
-    {
-        var programme = await _programmeService.GetProgrammeByIdAsync(id);
-        if (programme == null)
+        public ProgrammeController(IProgrammeService programmeService, ContactService contactService)
         {
-            return NotFound();
+            _programmeService = programmeService;
+            _contactService = contactService;
         }
 
-        return Ok(programme);
-    }
-
-    [HttpPost]
-    public async Task<ActionResult<Programme>> CreateProgramme(Programme programme)
-    {
-        await _programmeService.AddProgrammeAsync(programme);
-        return CreatedAtAction(nameof(GetProgramme), new { id = programme.Id }, programme);
-    }
-
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateProgramme(int id, Programme programme)
-    {
-        if (id != programme.Id)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ProgrammeDto>>> GetProgrammes()
         {
-            return BadRequest();
+            var programmes = await _programmeService.GetAllProgrammesAsync();
+            var programmeDtos = programmes.Select(p => new ProgrammeDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                ContactId = p.ContactId,
+                IsActive = p.IsActive
+            }).ToList();
+
+            return Ok(programmeDtos);
         }
 
-        var existingProgramme = await _programmeService.GetProgrammeByIdAsync(id);
-        if (existingProgramme == null)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProgrammeDto>> GetProgramme(int id)
         {
-            return NotFound();
+            var programme = await _programmeService.GetProgrammeByIdAsync(id);
+            if (programme == null)
+            {
+                return NotFound();
+            }
+
+            var programmeDto = new ProgrammeDto
+            {
+                Id = programme.Id,
+                Name = programme.Name,
+                Description = programme.Description,
+                ContactId = programme.ContactId,
+                IsActive = programme.IsActive
+            };
+
+            return Ok(programmeDto);
         }
 
-        await _programmeService.UpdateProgrammeAsync(programme);
-        return NoContent();
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteProgramme(int id)
-    {
-        var programme = await _programmeService.GetProgrammeByIdAsync(id);
-        if (programme == null)
+        [HttpPost]
+        public async Task<ActionResult<ProgrammeDto>> CreateProgramme([FromBody] ProgrammeDto programmeDto)
         {
-            return NotFound();
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var contact = await _contactService.GetContactById(programmeDto.ContactId);
+                if (contact == null)
+                {
+                    return BadRequest("Invalid ContactID");
+                }
+
+                var programme = new Programme
+                {
+                    Name = programmeDto.Name,
+                    Description = programmeDto.Description,
+                    ContactId = programmeDto.ContactId,
+                    IsActive = programmeDto.IsActive
+                };
+
+                await _programmeService.AddProgrammeAsync(programme);
+
+                programmeDto.Id = programme.Id;
+
+                return CreatedAtAction(nameof(GetProgramme), new { id = programme.Id }, programmeDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
-        await _programmeService.DeleteProgrammeAsync(id);
-        return NoContent();
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateProgramme(int id, [FromBody] ProgrammeDto programmeDto)
+        {
+            if (id != programmeDto.Id)
+            {
+                return BadRequest();
+            }
+
+            var existingProgramme = await _programmeService.GetProgrammeByIdAsync(id);
+            if (existingProgramme == null)
+            {
+                return NotFound();
+            }
+
+            var programme = new Programme
+            {
+                Id = programmeDto.Id,
+                Name = programmeDto.Name,
+                Description = programmeDto.Description,
+                ContactId = programmeDto.ContactId,
+                IsActive = programmeDto.IsActive
+            };
+
+            await _programmeService.UpdateProgrammeAsync(programme);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProgramme(int id)
+        {
+            var programme = await _programmeService.GetProgrammeByIdAsync(id);
+            if (programme == null)
+            {
+                return NotFound();
+            }
+
+            await _programmeService.DeleteProgrammeAsync(id);
+
+            return NoContent();
+        }
     }
 }

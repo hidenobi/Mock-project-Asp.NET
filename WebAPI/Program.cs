@@ -14,36 +14,38 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-//var serverVersion = new MySqlServerVersion(new Version(8, 0, 23));
-
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IGovernmentOfficeRegionRepository, GovernmentOfficeRegionRepository>();
 builder.Services.AddScoped<IGovernmentOfficeRegionService, GovernmentOfficeRegionService>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
 builder.Services.AddScoped<IProgrammeService, ProgrammeService>();
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<IManagerNameRepository, ManagerNameRepository>();
 builder.Services.AddScoped<ContactService>();
 builder.Services.AddScoped<ManagerNameService>();
 builder.Services.AddScoped<IGovernmentOfficeRegionRepository, GovernmentOfficeRegionRepository>();
 builder.Services.AddScoped<IGovernmentOfficeRegionService, GovernmentOfficeRegionService>();
-builder.Services.AddScoped<IAddressRepository, AddressRepository>();
-builder.Services.AddScoped<IAddressService, AddressService>();
-builder.Services.AddScoped<IBusinessTypeRepository, BusinessTypeRepository>();
-builder.Services.AddScoped<IBusinessTypeService, BusinessTypeService>();
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
 
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -53,11 +55,12 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-
+app.UseCors("AllowAllOrigins");
 
 app.UseStaticFiles();
 
 app.UseRouting();
+
 
 
 app.Run();

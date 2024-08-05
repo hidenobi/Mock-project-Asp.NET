@@ -1,24 +1,55 @@
 @model WebMVC.Models.Programme
 
-<h1>Programme Details</h1>
+@{
+ViewData["Title"] = "Programme Details";
+}
 
-<table class="table">
-    <tr>
-        <th>Name</th>
-        <td>@Model.Name</td>
-    </tr>
-    <tr>
-        <th>Description</th>
-        <td>@Model.Description</td>
-    </tr>
-    <tr>
-        <th>Contact</th>
-        <td>@Model.Contact.Name</td>
-    </tr>
-    <tr>
-        <th>Is Active</th>
-        <td>@Model.IsActive</td>
-    </tr>
-</table>
+<h1>@ViewData["Title"]</h1>
 
-<a href="@Url.Action("Index")">Back to List</a>
+<form asp-action="UpdateDetails" method="post">
+    <div>
+        <h4>Programme</h4>
+        <hr />
+        <dl class="row">
+            <input type="hidden" asp-for="Id" />
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-9">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-9">
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Contact)
+            </dt>
+            <dd class="col-sm-9">
+                <select asp-for="ContactId" class="form-control" asp-items="ViewBag.Contacts">
+                    <option value="">Select Contact</option>
+                </select>
+                <span asp-validation-for="ContactId" class="text-danger"></span>
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.IsActive)
+            </dt>
+            <dd class="col-sm-9">
+                <input asp-for="IsActive" type="checkbox" />
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </dd>
+        </dl>
+    </div>
+
+    <div>
+        <input type="submit" value="Save Changes" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</form>
