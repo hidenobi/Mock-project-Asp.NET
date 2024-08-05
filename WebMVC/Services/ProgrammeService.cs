@@ -16,35 +16,35 @@ public class ProgrammeService : IProgrammeService
 
     public async Task<IEnumerable<Programme>> GetAllProgrammesAsync()
     {
-        var response = await _httpClient.GetAsync($"{_baseUrl}/programme");
+        var response = await _httpClient.GetAsync($"{_baseUrl}programme");
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<IEnumerable<Programme>>();
     }
 
     public async Task<Programme> GetProgrammeByIdAsync(int id)
     {
-        var response = await _httpClient.GetAsync($"{_baseUrl}/programme/{id}");
+        var response = await _httpClient.GetAsync($"{_baseUrl}programme/{id}");
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<Programme>();
     }
 
     public async Task<Programme> CreateProgrammeAsync(CreateProgrammeDto dto)
     {
-        var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/programme", dto);
+        var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}programme", dto);
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<Programme>();
     }
 
     public async Task<Programme> UpdateProgrammeAsync(int id, UpdateProgrammeDto dto)
     {
-        var response = await _httpClient.PutAsJsonAsync($"{_baseUrl}/programme/{id}", dto);
+        var response = await _httpClient.PutAsJsonAsync($"{_baseUrl}programme/{id}", dto);
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<Programme>();
     }
 
     public async Task DeleteProgrammeAsync(int id)
     {
-        var response = await _httpClient.DeleteAsync($"{_baseUrl}/programme/{id}");
+        var response = await _httpClient.DeleteAsync($"{_baseUrl}programme/{id}");
         response.EnsureSuccessStatusCode();
     }
 

@@ -3,6 +3,7 @@ using WebMVC.Models;
 
 namespace WebMVC.Controllers;
 
+[Route("[controller]")]
 public class GovernmentOfficeRegionController : Controller
 {
     private readonly HttpClient _httpClient;
@@ -18,7 +19,7 @@ public class GovernmentOfficeRegionController : Controller
     {
         var baseUrl = _configuration["MvcProject:applicationUrl"]
             ?.Split(";")
-            .FirstOrDefault(url => url.StartsWith("https"));
+            .FirstOrDefault(url => url.StartsWith("http"));
         var apiUrl = $"{baseUrl}/api/GovernmentOfficeRegion";
         var response = await _httpClient.GetAsync(apiUrl);
         if (response.IsSuccessStatusCode)
@@ -92,22 +93,22 @@ public class GovernmentOfficeRegionController : Controller
         return NotFound();
     }
 
-    public async Task<IActionResult> Details(int id)
-    {
-        var baseUrl = _configuration["MvcProject:applicationUrl"]
-            ?.Split(";")
-            .FirstOrDefault(url => url.StartsWith("https"));
-        var apiUrl = $"{baseUrl}/api/GovernmentOfficeRegion/{id}";
-        var response = await _httpClient.GetAsync(apiUrl);
-        if (response.IsSuccessStatusCode)
-        {
-            var gov = await response.Content.ReadFromJsonAsync<GovernmentOfficeRegion>();
-            if (gov != null)
-            {
-                return View(gov);
-            }
-        }
-
-        return NotFound();
-    }
+    // public async Task<IActionResult> Details(int id)
+    // {
+    //     var baseUrl = _configuration["MvcProject:applicationUrl"]
+    //         ?.Split(";")
+    //         .FirstOrDefault(url => url.StartsWith("http"));
+    //     var apiUrl = $"{baseUrl}/api/GovernmentOfficeRegion/{id}";
+    //     var response = await _httpClient.GetAsync(apiUrl);
+    //     if (response.IsSuccessStatusCode)
+    //     {
+    //         var gov = await response.Content.ReadFromJsonAsync<GovernmentOfficeRegion>();
+    //         if (gov != null)
+    //         {
+    //             return View(gov);
+    //         }
+    //     }
+    //
+    //     return NotFound();
+    // }
 }

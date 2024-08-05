@@ -1,3 +1,4 @@
+using WebMVC.Controllers;
 using WebMVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,20 +8,24 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 
 // Add services to the container.
+
 builder.Services.AddHttpClient<IContactService, ContactService>();
 builder.Services.AddHttpClient<ApiService>();
-builder.Services.AddScoped<ApiService>(); 
+builder.Services.AddScoped<ApiService>();
+builder.Services.AddScoped<ProgrammeController>();
+builder.Services.AddScoped<IProgrammeService,ProgrammeService>();
+builder.Services.AddHttpClient<GovernmentOfficeRegionController>();
+
+
+
 var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
 
 builder.Services.AddHttpClient("DefaultAPI", client =>
 {
     client.BaseAddress = new Uri(apiSettings.BaseUrl);
 });
-builder.Services.AddScoped<ApiService>(); 
-builder.Services.AddHttpClient("BusinessTypeAPI", client =>
-{
-    client.BaseAddress = new Uri("http://localhost:5103/"); 
-});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
