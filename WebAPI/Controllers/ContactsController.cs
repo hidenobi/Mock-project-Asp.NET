@@ -31,14 +31,22 @@ public class ContactsController : ControllerBase
     }
 
     [HttpGet("search")]
-    public async Task<ActionResult<IEnumerable<Contact>>> GetAllContactsByFirstNameAndSurnameAndIsActive
+    public async Task<ActionResult<PagedResult<Contact>>> GetAllContactsByFirstNameAndSurnameAndIsActive
     (
         string? firstName,
         string? surname,
-        bool? isActive = true
+        bool? isActive = true,
+        int page = 1,
+        int pageSize = 4
     )
     {
-        return Ok(await _contactService.GetAllContactsByFirstNameAndSurnameAndIsActive(firstName, surname, isActive));
+        return Ok(await _contactService.GetAllContactsByFirstNameAndSurnameAndIsActive
+            (
+                firstName,
+                surname,
+                isActive, page, pageSize
+            )
+        );
     }
 
     [HttpGet("{id}")]
