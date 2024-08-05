@@ -5,24 +5,25 @@
 <html lang="en">
 <head>
     <title>Government Office Region Details</title>
+    <link rel="stylesheet" href="~/css/GovernmentOfficeRegionstyle.css" />
 </head>
 <body>
 
-<div>
+<div class="container">
     <h1>Government Office Region Details</h1>
-    @* <h2>@Model.GovernmentOfficeRegionName</h2> *@
-    @if (Model != null)
-    {
-    <p>Name: @Model.GovernmentOfficeRegionName</p>
-    <p>Description: @Model.Description</p>
-    <p>County: @Model.County?.CountyName</p>
-    }
-    else
-    {
-    <p>Details not found.</p>
-    }
-
-    <a href="/GovernmentOfficeRegion">Back</a>
+    <div class="details-container">
+        <div class="details-content">
+            <label>Government Office Region Name</label>
+            <textarea readonly>@Model.GovernmentOfficeRegionName</textarea>
+            <label>Description</label>
+            <textarea readonly>@Model.Description</textarea>
+            <label>County</label>
+            <textarea readonly>@Model.County?.CountyName</textarea>
+        </div>
+    </div>
+    <div class="back-button">
+        <a href="/GovernmentOfficeRegion">Back</a>
+    </div>
 </div>
 </body>
 </html>

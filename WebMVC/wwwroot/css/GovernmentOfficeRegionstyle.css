@@ -45,6 +45,11 @@ th {
     background-color: #f5f5f5;
 }
 
+table a {
+    color: black;
+    text-decoration: none;
+}
+
 .pagination {
     display: flex;
     justify-content: flex-end;
@@ -69,3 +74,51 @@ th {
     margin-left: 10px;
 }
 
+.details-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.details-header {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+.details-content {
+    padding: 10px;
+}
+
+.details-content label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.details-content input, .details-content textarea {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.back-button {
+    display: block;
+    text-align: right;
+    margin-top: 10px;
+}
+
+.back-button a {
+    padding: 10px 20px;
+    background-color: #ddd;
+    color: black;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.back-button a:hover {
+    background-color: #ccc;
+}
