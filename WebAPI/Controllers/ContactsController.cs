@@ -131,8 +131,8 @@ public class ContactsController : ControllerBase
                 }
             }
 
-
             // Cập nhật thông tin contact
+            contact.Id = id;
             contact.Firstname = updateContactDto.Firstname;
             contact.Surname = updateContactDto.Surname;
             contact.KnownAs = updateContactDto.KnownAs;
