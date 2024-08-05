@@ -14,14 +14,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-// var serverVersion = new MySqlServerVersion(new Version(8, 0, 23));
-
-// builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//     options.UseMySql(connectionString, serverVersion));
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var serverVersion = new MySqlServerVersion(new Version(8, 0, 23));
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseMySql(connectionString, serverVersion));
+
+// builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IGovernmentOfficeRegionRepository, GovernmentOfficeRegionRepository>();
@@ -29,7 +29,6 @@ builder.Services.AddScoped<IGovernmentOfficeRegionService, GovernmentOfficeRegio
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
 builder.Services.AddScoped<IProgrammeService, ProgrammeService>();
-builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<IManagerNameRepository, ManagerNameRepository>();
 builder.Services.AddScoped<ContactService>();
 builder.Services.AddScoped<ManagerNameService>();
