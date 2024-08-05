@@ -92,6 +92,7 @@ public class ContactRepository : IContactRepository
     public async Task<Contact?> GetContactById(int id)
     {
         var contact = _context.Contacts
+            .Where(c => c.Id == id)
             .Include(c => c.ManagerName)
             .Select(c => new ContactDto
             {
