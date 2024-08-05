@@ -68,4 +68,40 @@ public class ContactController : Controller
 
         return View(contact);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+        Console.WriteLine($"TAG-PT: for view edit");
+        var contact = await _contactService.GetContactByIdAsync(id);
+        var managerNames = await _contactService.GetAllManagerNamesAsync();
+        ViewBag.ManagerNames = new SelectList(managerNames, "Id", "Name", "Name");
+        return View(contact);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(ContactDto contactDto)
+    {
+        var id = contactDto.Id;
+        var updateContactDto = ContactConverter.ToUpdateContactDto(contactDto);
+        Console.WriteLine($"TAG-PT: for action edit {id}");
+        try
+        {
+            var updatedContact = await _contactService.UpdateContactAsync(id, updateContactDto);
+            if (updatedContact == null)
+            {
+                // Log lỗi không tìm thấy contact hoặc lỗi cập nhật
+                Console.WriteLine($"Failed to update contact with id {id}");
+                return NotFound($"Contact with id {id} not found or could not be updated");
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception ex)
+        {
+            // Log lỗi
+            Console.WriteLine($"Error updating contact: {ex.Message}");
+            ModelState.AddModelError("", "An error occurred while updating the contact. Please try again.");
+            return RedirectToAction(nameof(Index));
+        }
+    }
 }

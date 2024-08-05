@@ -64,9 +64,3 @@ public class UpdateContactDto
     public string? JobTitle { get; set; }
     public bool IsActive { get; set; }
 }
-
-public class ManagerNameDto 
-{
-    public int Id { get; set; }
-    public string? Name { get; set; }
-}
