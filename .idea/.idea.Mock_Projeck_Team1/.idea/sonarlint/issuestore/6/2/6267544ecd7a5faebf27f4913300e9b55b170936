@@ -1,2 +1,4 @@
 
-;csharpsquid:S6966"Await AddAsync instead.(ÿ­Çª8ïîµÎ2
+~csharpsquid:S112)"5'System.Exception' should not be thrown by user code.(ÿ‚÷œ8â‰Ğ’2J$7de706b3-0e9c-4246-862f-9d397131da43
+ƒcsharpsquid:S1128"5'System.Exception' should not be thrown by user code.(ÇÎ¦Öøÿÿÿÿ8â‰Ğ’2J$0e23d5bd-cf86-452b-bedc-8b1f955d054f
+acsharpsquid:S6966,"Await AddAsync instead.(ÿ­Çª8ã‰Ğ’2J$1f3e8160-dbb7-430b-9c4e-4935b1411274
