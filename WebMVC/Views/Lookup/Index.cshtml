@@ -1,61 +1,94 @@
 @{
-    ViewData["Title"] = "Search Page";
+ViewData["Title"] = "Search Page";
 }
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <h1>@ViewData["Title"]</h1>
+<body class="bg-light">
+<div class="container py-5">
+    <h1 class="mb-4 text-center">@ViewData["Title"]</h1>
 
+    <div class="row g-4">
         <!-- Section for Type of Business -->
-        <div class="section">
-            <h2>Type of Business</h2>
-            <label for="businessName">Business Name:</label>
-            <input type="text" id="businessName" name="businessName" readonly />
-            <br />
-            <label for="sicCode">SIC Code:</label>
-            <input type="text" id="sicCode" name="sicCode" readonly />
-            <br />
-            <button onclick="window.open('/BusinessType/search', 'search', 'width=800,height=600')">Lookup Business Type</button>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Type of Business</h2>
+                    <div class="mb-3">
+                        <label for="businessName" class="form-label">Business Name:</label>
+                        <input type="text" class="form-control" id="businessName" name="businessName" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="sicCode" class="form-label">SIC Code:</label>
+                        <input type="text" class="form-control" id="sicCode" name="sicCode" readonly />
+                    </div>
+                    <button class="btn btn-primary" onclick="openBusinessSearch()">Lookup Business Type</button>
+                </div>
+            </div>
         </div>
 
         <!-- Section for Address -->
-        <div class="section">
-            <h2>Address</h2>
-            <label for="postcode">Postcode:</label>
-            <input type="text" id="postcode" name="postcode" readonly />
-            <br />
-            <label for="street">Street:</label>
-            <input type="text" id="street" name="street" readonly />
-            <br />
-            <label for="town">Town:</label>
-            <input type="text" id="town" name="town" readonly />
-            <br />
-
-            <button onclick="window.open('/address/search', 'search', 'width=800,height=600')">Lookup Address</button>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Address</h2>
+                    <div class="mb-3">
+                        <label for="postcode" class="form-label">Postcode:</label>
+                        <input type="text" class="form-control" id="postcode" name="postcode" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="street" class="form-label">Street:</label>
+                        <input type="text" class="form-control" id="street" name="street" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="town" class="form-label">Town:</label>
+                        <input type="text" class="form-control" id="town" name="town" readonly />
+                    </div>
+                    <button class="btn btn-primary" onclick="openAddressSearch()">Lookup Address</button>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
-    <script>
-        function setSelectedBusiness(business) {
-            document.getElementById('businessName').value = business.BusinessName;
-            document.getElementById('sicCode').value = business.SicCode;
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let businessWindow, addressWindow;
+
+    function openBusinessSearch() {
+        businessWindow = window.open('/BusinessType/search', 'businessSearch', 'width=800,height=600');
+    }
+
+    function openAddressSearch() {
+        addressWindow = window.open('/address/search', 'addressSearch', 'width=800,height=600');
+    }
+
+    function setSelectedBusiness(business) {
+        document.getElementById('businessName').value = business.BusinessName;
+        document.getElementById('sicCode').value = business.SicCode;
+        if (businessWindow) businessWindow.close();
+    }
+
+    function setSelectedAddress(address) {
+        document.getElementById('postcode').value = address.PostCode;
+        document.getElementById('street').value = address.Address;
+        document.getElementById('town').value = address.Town;
+        if (addressWindow) addressWindow.close();
+    }
+
+    window.addEventListener('message', function(event) {
+        if (event.data.type === 'businessSelected') {
+            setSelectedBusiness(event.data.business);
+        } else if (event.data.type === 'addressSelected') {
+            setSelectedAddress(event.data.address);
         }
-
-        function setSelectedAddress(address) {
-            document.getElementById('postcode').value = address.PostCode;
-            document.getElementById('street').value = address.Address;
-            document.getElementById('town').value = address.Town;
-            document.getElementById('county').value = address.County;
-            document.getElementById('country').value = address.CountryName;
-        }
-    </script>
-
+    }, false);
+</script>
 </body>
 </html>
