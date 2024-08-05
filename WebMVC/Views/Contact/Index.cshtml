@@ -1,4 +1,4 @@
-@model System.Collections.Generic.IEnumerable<WebMVC.Models.ContactDto?>
+@model WebMVC.Pagination.PagedResult<WebMVC.Models.ContactDto>
 
 @{
     ViewData["Title"] = "Contact List";
@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="isActiveFilter" name="isActiveFilter" 
+                <input class="form-check-input" type="checkbox" id="isActiveFilter" name="isActiveFilter"
                        value="true" @(ViewBag.IsActiveFilter == false ? "" : "checked")>
                 <input type="hidden" name="isActiveFilter" value="false">
                 <label class="form-check-label" for="isActiveFilter">Show Active Only</label>
@@ -30,6 +30,7 @@
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
     </div>
+    <input type="hidden" id="currentPage" name="page" value="@Model.PageNumber">
 </form>
 <form id="contactForm">
     <div class="mb-3">
@@ -48,7 +49,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var contact in Model)
+        @foreach (var contact in Model.Items)
         {
             <tr>
                 <td>
@@ -70,6 +71,26 @@
         <button type="button" class="btn btn-danger action-btn" data-action="delete">Delete</button>
     </div>
 </form>
+<div class="mt-3">
+    Showing @((Model.PageNumber - 1) * Model.PageSize + 1) to @(Math.Min(Model.PageNumber * Model.PageSize, Model.TotalItems)) of @Model.TotalItems items
+</div>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+            <a class="page-link" href="#" data-page="@(Model.PageNumber - 1)">Previous</a>
+        </li>
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                <a class="page-link" href="#" data-page="@i">@i</a>
+            </li>
+        }
+        <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
+            <a class="page-link" href="#" data-page="@(Model.PageNumber + 1)">Next</a>
+        </li>
+    </ul>
+</nav>
 
 @section Scripts {
     <script>
@@ -85,6 +106,14 @@
                     alert("Please select a contact.");
                 }
             });
+        });
+
+        // Pagination handling
+        $('.pagination .page-link').click(function(e) {
+            e.preventDefault();
+            var page = $(this).data('page');
+            $('#currentPage').val(page);
+            $('#contactSearchForm').submit();
         });
         
         document.addEventListener('DOMContentLoaded', function() {
@@ -107,7 +136,7 @@
         
                 checkbox.addEventListener('change', function() {
                     updateCheckboxState();
-                    
+                    $('#currentPage').val(1); // Reset to first page on filter change
                     // Tự động submit form khi checkbox thay đổi
                     form.submit();
                 });

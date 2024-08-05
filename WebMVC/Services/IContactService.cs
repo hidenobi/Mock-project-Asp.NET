@@ -6,11 +6,13 @@ public interface IContactService
 {
     Task<IEnumerable<ContactDto?>> GetAllContactsAsync();
 
-    Task<IEnumerable<ContactDto?>> GetAllContactsByFirstNameAndSurnameAndIsActive
+    Task<Pagination.PagedResult<ContactDto?>> GetAllContactsByFirstNameAndSurnameAndIsActive
     (
         string? firstName,
         string? surname,
-        bool? isActive
+        bool? isActive,
+        int page = 1,
+        int pageSize = 4
     );
 
     Task<ContactDto> GetContactByIdAsync(int id);

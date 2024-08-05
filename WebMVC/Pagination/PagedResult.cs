@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-
-namespace DataAccessLayer.Entities
+namespace WebMVC.Pagination
 {
     public class PagedResult<T>
     {

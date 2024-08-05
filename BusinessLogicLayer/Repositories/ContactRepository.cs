@@ -68,9 +68,13 @@ public class ContactRepository : IContactRepository
         {
             query = query.Where(c => c.IsActive == isActive);
         }
+        // Đếm tổng số items
+        var totalItems = await query.CountAsync();
 
         var contacts = await query
             .Include(c => c.ManagerName)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
             .Select(c => new ContactDto
             {
                 Id = c.Id,
@@ -95,7 +99,7 @@ public class ContactRepository : IContactRepository
         return new PagedResult<ContactDto>
         {
             Items = contacts,
-            TotalItems = contacts.Count,
+            TotalItems = totalItems,
             PageNumber = page,
             PageSize = pageSize,
         };

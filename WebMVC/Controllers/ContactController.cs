@@ -14,30 +14,34 @@ public class ContactController : Controller
         _contactService = contactService;
     }
 
-    public async Task<IActionResult> Index()
-    {
-        var contacts = await _contactService.GetAllContactsAsync();
-        return View(contacts);
-    }
+    // public async Task<IActionResult> Index()
+    // {
+    //     var contacts = await _contactService.GetAllContactsAsync();
+    //     return View(contacts);
+    // }
 
     [HttpGet]
     public async Task<IActionResult> Index(
         string? firstNameSearch,
         string? surnameSearch,
-        bool? isActiveFilter)
+        bool? isActiveFilter,
+        int page = 1
+    )
     {
-        Console.WriteLine($"ContactController: TAG-PT: {isActiveFilter}");
-        var contacts =
+        int pageSize = 4;
+        var pagedResult =
             await _contactService.GetAllContactsByFirstNameAndSurnameAndIsActive
             (
                 firstNameSearch,
                 surnameSearch,
-                isActiveFilter
+                isActiveFilter,
+                page, 
+                pageSize
             );
         ViewBag.FirstNameSearch = firstNameSearch;
         ViewBag.SurnameSearch = surnameSearch;
         ViewBag.IsActiveFilter = isActiveFilter ?? true;
-        return View(contacts);
+        return View(pagedResult);
     }
 
     public async Task<IActionResult> Details(int id)
@@ -94,6 +98,7 @@ public class ContactController : Controller
                 Console.WriteLine($"Failed to update contact with id {id}");
                 return NotFound($"Contact with id {id} not found or could not be updated");
             }
+
             return RedirectToAction(nameof(Index));
         }
         catch (Exception ex)

@@ -20,18 +20,20 @@ public class ContactService : IContactService
         return await response.Content.ReadFromJsonAsync<IEnumerable<ContactDto>>();
     }
 
-    public async Task<IEnumerable<ContactDto?>> GetAllContactsByFirstNameAndSurnameAndIsActive
+    public async Task<Pagination.PagedResult<ContactDto?>> GetAllContactsByFirstNameAndSurnameAndIsActive
     (
         string? firstName,
         string? surname,
-        bool? isActive
+        bool? isActive,
+        int page = 1,
+        int pageSize = 4
     )
     {
         var response =
             await _httpClient.GetAsync(
-                $"{_baseUrl}contacts/search?firstName={firstName}&surname={surname}&isActive={isActive}");
+                $"{_baseUrl}contacts/search?firstName={firstName}&surname={surname}&isActive={isActive}&page={page}&pageSize={pageSize}");
         response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<IEnumerable<ContactDto>>();
+        return await response.Content.ReadFromJsonAsync<Pagination.PagedResult<ContactDto>>();
     }
 
     public async Task<ContactDto> GetContactByIdAsync(int id)
