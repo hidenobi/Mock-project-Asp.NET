@@ -4,7 +4,7 @@ using DataAccessLayer.Entities.Dto;
 
 namespace BusinessLogicLayer.Services;
 
-public class ContactService
+public class ContactService : IContactService
 {
     private readonly IContactRepository _contactRepository;
 

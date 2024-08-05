@@ -3,7 +3,7 @@ using DataAccessLayer.Entities;
 
 namespace BusinessLogicLayer.Services;
 
-public class ManagerNameService
+public class ManagerNameService : IManagerNameService
 {
     private readonly IManagerNameRepository _managerNameRepository;
 
