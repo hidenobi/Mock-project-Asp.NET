@@ -1,0 +1,61 @@
+@{
+    ViewData["Title"] = "Search Page";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+
+        <!-- Section for Type of Business -->
+        <div class="section">
+            <h2>Type of Business</h2>
+            <label for="businessName">Business Name:</label>
+            <input type="text" id="businessName" name="businessName" readonly />
+            <br />
+            <label for="sicCode">SIC Code:</label>
+            <input type="text" id="sicCode" name="sicCode" readonly />
+            <br />
+            <button onclick="window.open('/BusinessType/search', 'search', 'width=800,height=600')">Lookup Business Type</button>
+        </div>
+
+        <!-- Section for Address -->
+        <div class="section">
+            <h2>Address</h2>
+            <label for="postcode">Postcode:</label>
+            <input type="text" id="postcode" name="postcode" readonly />
+            <br />
+            <label for="street">Street:</label>
+            <input type="text" id="street" name="street" readonly />
+            <br />
+            <label for="town">Town:</label>
+            <input type="text" id="town" name="town" readonly />
+            <br />
+
+            <button onclick="window.open('/address/search', 'search', 'width=800,height=600')">Lookup Address</button>
+        </div>
+    </div>
+
+    <script>
+        function setSelectedBusiness(business) {
+            document.getElementById('businessName').value = business.BusinessName;
+            document.getElementById('sicCode').value = business.SicCode;
+        }
+
+        function setSelectedAddress(address) {
+            document.getElementById('postcode').value = address.PostCode;
+            document.getElementById('street').value = address.Address;
+            document.getElementById('town').value = address.Town;
+            document.getElementById('county').value = address.County;
+            document.getElementById('country').value = address.CountryName;
+        }
+    </script>
+
+</body>
+</html>

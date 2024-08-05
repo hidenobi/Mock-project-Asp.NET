@@ -17,7 +17,7 @@
     @foreach (var item in Model.Items)
     {
     <tr>
-        <td><input type="radio" name="selectedAddress" value="@item.Address" /></td>
+        <td><input type="radio" name="selectedAddress" data-address="@item.Address" data-post-code="@item.PostCode" data-town="@item.Town" data-county="@item.County" data-country="@item.CountryName" /></td>
         <td>@item.Address</td>
         <td>@item.PostCode</td>
         <td>@item.Town</td>

@@ -1,6 +1,6 @@
 @model DataAccessLayer.Entities.PagedResult<DataAccessLayer.Entities.AddressSearchResult>
 @{
-ViewData["Title"] = "Search Postcode";
+    ViewData["Title"] = "Search Postcode";
 }
 <h4>Search Postcode</h4>
 <div class="search-form">
@@ -67,13 +67,11 @@ ViewData["Title"] = "Search Postcode";
             });
         });
 
-        // Clear button (formerly None)
         $('#clearBtn').click(function() {
             $('#searchForm')[0].reset();
             $('#searchResults').empty();
         });
 
-        // None button (formerly Clear)
         $('#noneBtn').click(function() {
             $('#searchForm')[0].reset();
         });
@@ -82,27 +80,25 @@ ViewData["Title"] = "Search Postcode";
             window.close();
         });
 
-        $(document).on('click', '#selectBtn', function() {
-            var selectedAddress = $('input[name="selectedAddress"]:checked').closest('tr');
-            if (selectedAddress.length > 0) {
-                var address = selectedAddress.find('td:eq(1)').text();
-                var postcode = selectedAddress.find('td:eq(2)').text();
-                var town = selectedAddress.find('td:eq(3)').text();
-                var county = selectedAddress.find('td:eq(4)').text();
-                var country = selectedAddress.find('td:eq(5)').text();
-
-                // Populate the input fields
-                $('#postcode').val(postcode);
-                $('#street').val(address);
-                $('#town').val(town);
-
-                // If you want to pass this data back to the opener window
-                if (window.opener && !window.opener.closed) {
-                    window.opener.populateAddressFields(address, postcode, town, county, country);
-                }
-
-                // Optionally close the window
-                // window.close();
+        $('#selectBtn').click(function() {
+            var selectedRadio = $('input[name="selectedAddress"]:checked');
+            if (selectedRadio.length > 0) {
+                var address = selectedRadio.data('address');
+                var postCode = selectedRadio.data('post-code');
+                var town = selectedRadio.data('town');
+                var county = selectedRadio.data('county');
+                var country = selectedRadio.data('country');
+                var selectedAddress = {
+                    Address: address,
+                    PostCode: postCode,
+                    Town: town,
+                    County: county,
+                    Country: country
+                };
+                
+                window.opener.setSelectedAddress(selectedAddress);
+                
+                window.close();
             } else {
                 alert('Please select an address.');
             }

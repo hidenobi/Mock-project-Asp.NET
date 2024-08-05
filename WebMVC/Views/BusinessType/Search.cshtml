@@ -1,6 +1,6 @@
 @model DataAccessLayer.Entities.PagedResult<DataAccessLayer.Entities.BusinessType>
 @{
-ViewData["Title"] = "Search Business Type";
+    ViewData["Title"] = "Search Business Type";
 }
 
 <h4>Search Business Type</h4>
@@ -19,9 +19,7 @@ ViewData["Title"] = "Search Business Type";
         <div class="form-row">
             <div class="col-md-4">
                 <button type="submit" class="btn btn-primary">Search Business</button>
-
                 <button type="button" id="clearBtn" class="btn btn-secondary">Clear</button>
-
                 <button type="button" id="noneBtn" class="btn btn-secondary">None</button>
             </div>
         </div>
@@ -56,49 +54,35 @@ ViewData["Title"] = "Search Business Type";
     $(document).ready(function () {
         $('#searchForm').on('submit', function (e) {
             e.preventDefault();
-            $.ajax({
-                url: this.action,
-                method: this.method,
-                data: $(this).serialize(),
-                success: function (result) {
-                    $('#searchResults').html(result);
-                },
-                error: function (xhr, status, error) {
-                    console.log("Error: " + error);
-                }
-            });
+            loadPage(1);
         });
 
         $('#clearBtn').click(function () {
-            $('#searchForm')[0].reset();
+            $('#searchForm').trigger('reset');
             $('#searchResults').empty();
         });
 
         $('#noneBtn').click(function () {
-            $('#searchForm')[0].reset();
+            $('#searchForm').trigger('reset');
+            $('#searchResults').empty();
+        });
+
+        $('#selectBtn').click(function () {
+            var selectedRadio = $('#searchResults input[type=radio]:checked');
+            if (selectedRadio.length > 0) {
+                var businessName = selectedRadio.data('business-name');
+                var sicCode = selectedRadio.data('sic-code');
+                var selectedBusiness = {
+                    BusinessName: businessName,
+                    SicCode: sicCode
+                };
+                window.opener.setSelectedBusiness(selectedBusiness);
+                window.close();
+            }
         });
 
         $('#closeBtn').click(function () {
             window.close();
-        });
-
-        $(document).on('click', '#selectBtn', function () {
-            var selectedBusinessType = $('input[name="selectedBusinessType"]:checked').closest('tr');
-            if (selectedBusinessType.length > 0) {
-                var businessName = selectedBusinessType.find('td:eq(1)').text();
-                var sicCode = selectedBusinessType.find('td:eq(2)').text();
-
-                $('#businessName').val(businessName);
-                $('#sicCode').val(sicCode);
-
-                if (window.opener && !window.opener.closed) {
-                    window.opener.populateBusinessTypeFields(businessName, sicCode);
-                }
-
-                window.close();
-            } else {
-                alert('Please select a business type.');
-            }
         });
     });
 </script>
