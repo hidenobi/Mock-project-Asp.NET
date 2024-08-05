@@ -2,7 +2,7 @@
 
 @{
 ViewBag.Title = "Government Office Region List";
-<link rel="stylesheet" href="~/css/style.css" />
+<link rel="stylesheet" href="~/css/GovernmentOfficeRegionstyle.css" />
 }
 
 <!DOCTYPE html>
@@ -16,24 +16,24 @@ ViewBag.Title = "Government Office Region List";
 <h1>Government Office Regions</h1>
 
 <div class="filters">
-    <a href="@Url.Action("Index", new {filter = "All", pageNumber = 1 })">All</a> |
-    <a href="@Url.Action("Index", new {filter = "0-9", pageNumber = 1 })">0-9</a> |
-    <a href="@Url.Action("Index", new {filter = "A-E", pageNumber = 1 })">A B C D E</a> |
-    <a href="@Url.Action("Index", new {filter = "F-J", pageNumber = 1 })">F G H I J</a> |
-    <a href="@Url.Action("Index", new {filter = "K-N", pageNumber = 1 })">K L M N</a> |
-    <a href="@Url.Action("Index", new {filter = "O-R", pageNumber = 1 })">O P Q R</a> |
-    <a href="@Url.Action("Index", new {filter = "S-V", pageNumber = 1 })">S T U V</a> |
-    <a href="@Url.Action("Index", new {filter = "W-Z", pageNumber = 1 })">W X Y Z</a>
+    <a href="@Url.Action("Index", new {filter = "All", includeInactive = ViewBag.IncludeInactive, pageNumber = 1 })">All</a> |
+    <a href="@Url.Action("Index", new {filter = "0-9", includeInactive = ViewBag.IncludeInactive, pageNumber = 1 })">0-9</a> |
+    <a href="@Url.Action("Index", new {filter = "A-E", includeInactive = ViewBag.IncludeInactive, pageNumber = 1 })">A B C D E</a> |
+    <a href="@Url.Action("Index", new {filter = "F-J", includeInactive = ViewBag.IncludeInactive, pageNumber = 1 })">F G H I J</a> |
+    <a href="@Url.Action("Index", new {filter = "K-N", includeInactive = ViewBag.IncludeInactive, pageNumber = 1 })">K L M N</a> |
+    <a href="@Url.Action("Index", new {filter = "O-R", includeInactive = ViewBag.IncludeInactive, pageNumber = 1 })">O P Q R</a> |
+    <a href="@Url.Action("Index", new {filter = "S-V", includeInactive = ViewBag.IncludeInactive, pageNumber = 1 })">S T U V</a> |
+    <a href="@Url.Action("Index", new {filter = "W-Z", includeInactive = ViewBag.IncludeInactive, pageNumber = 1 })">W X Y Z</a>
     <input type="checkbox" id="includeInactive" name="includeInactive" @(ViewBag.IncludeInactive ? "checked" : "") onchange="window.location.href='@Url.Action("Index", new { filter = ViewBag.Filter, includeInactive = !ViewBag.IncludeInactive, pageNumber = ViewBag.CurrentPage, pageRecord = ViewBag.PageRecords })'" /> Include In-active
 </div>
 
 <table>
     <thead>
     <tr>
-        <th>Government Office Region Name</th>
-        <th>Description</th>
-        <th>County</th>
-        <th>IsActive</th>
+        <th><a href="@Url.Action("Index", new { filter = ViewBag.Filter, includeInactive = ViewBag.IncludeInactive, pageNumber = ViewBag.CurrentPage, pageRecord = ViewBag.PageRecords, sortOrder = ViewBag.SortOrder == "name_asc" ? "name_desc" : "name_asc" })">Government Office Region Name</a></th>
+        <th><a href="@Url.Action("Index", new { filter = ViewBag.Filter, includeInactive = ViewBag.IncludeInactive, pageNumber = ViewBag.CurrentPage, pageRecord = ViewBag.PageRecords, sortOrder = ViewBag.SortOrder == "description_asc" ? "description_desc" : "description_asc" })">Description</a></th>
+        <th><a href="@Url.Action("Index", new { filter = ViewBag.Filter, includeInactive = ViewBag.IncludeInactive, pageNumber = ViewBag.CurrentPage, pageRecord = ViewBag.PageRecords, sortOrder = ViewBag.SortOrder == "county_asc" ? "county_desc" : "county_asc" })">County</a></th>
+        <th><a href="@Url.Action("Index", new { filter = ViewBag.Filter, includeInactive = ViewBag.IncludeInactive, pageNumber = ViewBag.CurrentPage, pageRecord = ViewBag.PageRecords, sortOrder = ViewBag.SortOrder == "isActive_asc" ? "isActive_desc" : "isActive_asc" })">IsActive</a></th>
     </tr>
     </thead>
     <tbody>
@@ -52,12 +52,12 @@ ViewBag.Title = "Government Office Region List";
 <div class="pagination">
     @if (ViewBag.CurrentPage > 1)
     {
-    <a href="@Url.Action("Index", new {fiter = ViewBag.Filter, pageNumber = ViewBag.CurrentPage - 1})"> Previous </a>
+    <a href="@Url.Action("Index", new {fiter = ViewBag.Filter, includeInactive = ViewBag.IncludeInactive, sortOrder = ViewBag.SortOrder, pageNumber = ViewBag.CurrentPage - 1})"> Previous </a>
     }
     <span>@ViewBag.CurrentPage of @ViewBag.TotalPages</span>
     @if (ViewBag.CurrentPage < ViewBag.TotalPages)
     {
-    <a href="@Url.Action("Index", new {fiter = ViewBag.Filter, pageNumber = ViewBag.CurrentPage + 1})"> Next </a>
+    <a href="@Url.Action("Index", new {fiter = ViewBag.Filter, includeInactive = ViewBag.IncludeInactive, sortOrder = ViewBag.SortOrder, pageNumber = ViewBag.CurrentPage + 1})"> Next </a>
     }
 </div>
 

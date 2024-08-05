@@ -30,11 +30,17 @@ public class ApplicationDbContext : DbContext
             .HasOne(p => p.ManagerName)
             .WithMany(a => a.Contacts)
             .HasForeignKey(b => b.ManagerNameId);
+        
+        modelBuilder.Entity<Country>().HasData(
+            new Country {CountryID = 1, CountryName = "Vietnam"},
+            new Country {CountryID = 2, CountryName = "Singapo"}
+            );
+        
         modelBuilder.Entity<County>().HasData(
-            new County { CountyID = 1, CountyName = "Vietnam" },
-            new County { CountyID = 2, CountyName = "USA" },
-            new County { CountyID = 3, CountyName = "Singapore"},
-            new County { CountyID = 4, CountyName = "Han Quoc"}
+            new County { CountyID = 1, CountryID = 1, CountyName = "Hanoi1" },
+            new County { CountyID = 2, CountryID = 2,  CountyName = "Sing1" },
+            new County { CountyID = 3, CountryID = 1, CountyName = "Hanoi2"},
+            new County { CountyID = 4, CountryID = 2, CountyName = "Sing2"}
         );
     
         modelBuilder.Entity<GovernmentOfficeRegion>().HasData(
@@ -46,7 +52,7 @@ public class ApplicationDbContext : DbContext
             new GovernmentOfficeRegion { GovernmentOfficeRegionId = 6, GovernmentOfficeRegionName = "MOV", Description = "Des6", CountyId = 4, IsActive = false },
             new GovernmentOfficeRegion { GovernmentOfficeRegionId = 7, GovernmentOfficeRegionName = "POV", Description = "Des7", CountyId = 2, IsActive = true },
             new GovernmentOfficeRegion { GovernmentOfficeRegionId = 8, GovernmentOfficeRegionName = "TGOV", Description = "Des8", CountyId = 1, IsActive = true },
-            new GovernmentOfficeRegion { GovernmentOfficeRegionId = 9, GovernmentOfficeRegionName = "XGOV", Description = "Des8", CountyId = 3, IsActive = true },
+            new GovernmentOfficeRegion { GovernmentOfficeRegionId = 9, GovernmentOfficeRegionName = "XGOV", Description = "Des9", CountyId = 3, IsActive = true },
             new GovernmentOfficeRegion { GovernmentOfficeRegionId = 10, GovernmentOfficeRegionName = "ZGOV", Description = "Des10", CountyId = 4, IsActive = true },
             new GovernmentOfficeRegion { GovernmentOfficeRegionId = 11, GovernmentOfficeRegionName = "WGOV", Description = "Des11", CountyId = 4, IsActive = true },
             new GovernmentOfficeRegion { GovernmentOfficeRegionId = 12, GovernmentOfficeRegionName = "OGOV", Description = "Des12", CountyId = 2, IsActive = true },
