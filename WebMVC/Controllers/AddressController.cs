@@ -37,7 +37,7 @@ namespace WebMVC.Controllers
                 var content = await response.Content.ReadAsStringAsync();
                 var results = JsonSerializer.Deserialize<List<AddressSearchResult>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                int pageSize = 5;  // Set page size to 5
+                int pageSize = 15;  
                 if(results == null){
                     throw new InvalidOperationException("No results found.");
                 }
