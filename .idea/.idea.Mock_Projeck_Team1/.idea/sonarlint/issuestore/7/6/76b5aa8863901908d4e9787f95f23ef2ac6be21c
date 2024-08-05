@@ -1,6 +1,7 @@
 
-Šcsharpsquid:S6967";ModelState.IsValid should be checked in controller actions.(“€Ç³øÿÿÿÿ8£‹­’2J$26311c04-6bbc-4ba6-ad12-d86bfef1c3f1
-qcsharpsquid:S2971V""Use 'Count' property here instead.(ìÃï©úÿÿÿÿ8£‹­’2J$8c71bdaa-feca-4cf8-972e-f38384f820a0
-ªcsharpsquid:S6602"["Array.Find" static method should be used instead of the "FirstOrDefault" extension method.(¤ˆ³úúÿÿÿÿ8£‹­’2J$e911b363-da0a-4b02-8601-bef5a4ec5ef6
-ucsharpsquid:S1905S"&Remove this unnecessary cast to 'int'.(¦Æßßøÿÿÿÿ8£‹­’2J$b48650cb-ed39-43e9-978b-39ee594e4ca3
-hcsharpsquid:S125a"Remove this commented out code.(Ú°à¬8Ê¶¬‘’2J$442d901b-834c-443f-a28c-b0104af6b838
+Šcsharpsquid:S6967";ModelState.IsValid should be checked in controller actions.(“€Ç³øÿÿÿÿ8£‹­’2J$cd53db54-2051-4648-baee-43fe06d1bed7
+…csharpsquid:S6967`";ModelState.IsValid should be checked in controller actions.(æ­Ë£8èªÀ‘’2J$194bdcf4-3d31-49a1-9ad1-de861f74a277
+qcsharpsquid:S2971V""Use 'Count' property here instead.(ìÃï©úÿÿÿÿ8£‹­’2J$cd49772f-0f0c-4e2e-87ef-63ce00dd879f
+ªcsharpsquid:S6602"["Array.Find" static method should be used instead of the "FirstOrDefault" extension method.(¤ˆ³úúÿÿÿÿ8£‹­’2J$44968529-e7d7-482c-ad73-8f2b09fb1bcc
+ªcsharpsquid:S6602d"["Array.Find" static method should be used instead of the "FirstOrDefault" extension method.(¤ˆ³úúÿÿÿÿ8èªÀ‘’2J$6b51b1b0-4dd9-4bae-b184-90b3bce13458
+ucsharpsquid:S1905S"&Remove this unnecessary cast to 'int'.(¦Æßßøÿÿÿÿ8£‹­’2J$cb9eb66e-31f5-4205-a687-4f69166a162a

@@ -3,7 +3,7 @@ using WebMVC.Models;
 
 namespace WebMVC.Controllers;
 
-[Route("[controller]")]
+//[Route("[controller]")]
 public class GovernmentOfficeRegionController : Controller
 {
     private readonly HttpClient _httpClient;
@@ -14,7 +14,7 @@ public class GovernmentOfficeRegionController : Controller
         _httpClient = httpClient;
         _configuration = configuration;
     }
-
+    
     public async Task<IActionResult> Index(string filter = "All",bool includeInactive=false, int pageNumber = 1, int pageRecord = 15, string sortOrder = "name_asc")
     {
         var baseUrl = _configuration["MvcProject:applicationUrl"]
@@ -93,22 +93,22 @@ public class GovernmentOfficeRegionController : Controller
         return NotFound();
     }
 
-    // public async Task<IActionResult> Details(int id)
-    // {
-    //     var baseUrl = _configuration["MvcProject:applicationUrl"]
-    //         ?.Split(";")
-    //         .FirstOrDefault(url => url.StartsWith("http"));
-    //     var apiUrl = $"{baseUrl}/api/GovernmentOfficeRegion/{id}";
-    //     var response = await _httpClient.GetAsync(apiUrl);
-    //     if (response.IsSuccessStatusCode)
-    //     {
-    //         var gov = await response.Content.ReadFromJsonAsync<GovernmentOfficeRegion>();
-    //         if (gov != null)
-    //         {
-    //             return View(gov);
-    //         }
-    //     }
-    //
-    //     return NotFound();
-    // }
+    public async Task<IActionResult> Details(int id)
+    {
+        var baseUrl = _configuration["MvcProject:applicationUrl"]
+            ?.Split(";")
+            .FirstOrDefault(url => url.StartsWith("http"));
+        var apiUrl = $"{baseUrl}/api/GovernmentOfficeRegion/{id}";
+        var response = await _httpClient.GetAsync(apiUrl);
+        if (response.IsSuccessStatusCode)
+        {
+            var gov = await response.Content.ReadFromJsonAsync<GovernmentOfficeRegion>();
+            if (gov != null)
+            {
+                return View(gov);
+            }
+        }
+    
+        return NotFound();
+    }
 }

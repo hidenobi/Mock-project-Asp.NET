@@ -37,3 +37,7 @@ s
 CDataAccessLayer/Migrations/20240805095908_InitialCreate.Designer.cs,b\a\baaafc2e4ec8f40de645e5b82577c3ec2681b34a
 j
 :DataAccessLayer/Migrations/20240805095908_InitialCreate.cs,0\d\0d0ebd7e6344851857b3064cb3f38299322e56e6
+]
+-BusinessLogicLayer/Services/ContactService.cs,2\7\27fc5d507b9c99dac75fff06f9b3226ebf4cf6b7
+b
+2WebMVC/Views/GovernmentOfficeRegion/Details.cshtml,3\f\3f2075770dac98e780832571f25440def4dc06a9
